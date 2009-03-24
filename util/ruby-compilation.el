@@ -225,14 +225,18 @@ exec-to-string command, but it works and seems fast"
 
 (defun ruby-compilation-insertion-filter (proc string)
   "Insert text to buffer stripping ansi color codes"
-  ;; Can we use ansi-color-apply-on-region instead?
   (with-current-buffer (process-buffer proc)
     (let ((moving (= (point) (process-mark proc))))
       (save-excursion
 	(goto-char (process-mark proc))
-	(insert (ansi-color-filter-apply string))
+	(insert (ansi-color-apply (ruby-compilation-adjust-paths string)))
 	(set-marker (process-mark proc) (point)))
       (if moving (goto-char (process-mark proc))))))
+
+(defun ruby-compilation-adjust-paths (string)
+  (replace-regexp-in-string
+   "^\\([\t ]+\\)/test" "\\1test"
+   (replace-regexp-in-string "\\[/test" "[test" string)))
 
 (defun ruby-compilation-sentinel (proc msg)
   "Notify to changes in process state"
