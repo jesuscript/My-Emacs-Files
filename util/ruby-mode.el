@@ -1056,6 +1056,12 @@ With ARG, do it many times. Negative ARG means move forward."
         ((error)))
       i)))
 
+(defun ruby-insert-end ()
+  (interactive)
+  (insert "end")
+  (ruby-indent-line t)
+  (end-of-line))
+
 (defun ruby-mark-defun ()
   "Put mark at end of this Ruby function, point at beginning."
   (interactive)
