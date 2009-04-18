@@ -520,6 +520,15 @@ renders and redirects to find the final controller or view."
       (rinari-generate "migration"
 		       (and (string-match ".*create_\\(.+?\\)\.rb" path)
 			    (match-string 1 path)))))
+   (cells
+    "C"
+    (("app/cells/\\1_cell.rb"                  . "app/cells/\\1/.*")
+     ("app/cells/\\1/\\2.*"                    . "app/cells/\\1_cell.rb#\\2")
+     (t                                        . "app/cells/"))
+    (lambda (path)
+      (rinari-generate "cells"
+		       (and (string-match ".*/\\(.+?\\)_cell\.rb" path)
+			    (match-string 1 path)))))
    (environment "e" ((t . "config/environments/")) nil)
    (configuration "n" ((t . "config/")) nil)
    (script "s" ((t . "script/")) nil)
