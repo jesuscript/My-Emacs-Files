@@ -9,6 +9,8 @@ List of tasks for rinari
 for documentation see [[http://rinari.rubyforge.org/]]
 for background see http://groups.google.com/group/emacs-on-rails
 
+* TODO Document changing jump keybindings
+* TODO Document Xemacs support
 * TODO full test coverage (ERT) [0/2]
 - [ ] movement tests
   - [ ] controller
