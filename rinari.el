@@ -78,6 +78,13 @@
 (require 'jump)
 (require 'cl)
 
+;; fill in some missing variables for XEmacs
+(when (featurep 'xemacs)
+  ;;this variable does not exist in XEmacs
+  (defvar safe-local-variable-values ())
+  ;;find-file-hook is not defined and will otherwise not be called by XEmacs
+  (define-compatible-variable-alias 'find-file-hook 'find-file-hooks))
+
 (defgroup rinari nil
   "Rinari customizations."
   :prefix "rinari-"
