@@ -33,7 +33,7 @@
 ;; where the ability to jump to errors in source code is desirable.
 ;;
 ;; The functions you will probably want to use are
-;; 
+;;
 ;; ruby-compilation-run
 ;; ruby-compilation-rake
 ;; ruby-compilation-this-buffer (C-x t)
@@ -47,7 +47,12 @@
 ;; Package it up with dependencies for ELPA.
 
 ;;; Code:
-
+;; fill in some missing variables for XEmacs
+(when (featurep 'xemacs)
+  ;;this variable does not exist in XEmacs
+  (defvar safe-local-variable-values ())
+  ;;find-file-hook is not defined and will otherwise not be called by XEmacs
+  (define-compatible-variable-alias 'find-file-hook 'find-file-hooks))
 (require 'ansi-color)
 (require 'pcomplete)
 (require 'compile)
@@ -289,6 +294,6 @@ compilation buffer."
 (dolist (executable (list "jruby" "rbx" "ruby1.9" "ruby1.8" "ruby"))
   (add-to-list 'safe-local-variable-values
                (cons 'ruby-compilation-executable executable)))
-   
+
 (provide 'ruby-compilation)
 ;;; ruby-compilation.el ends here

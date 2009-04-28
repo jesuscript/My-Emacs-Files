@@ -589,7 +589,7 @@ behavior."
 
 (defun rinari-bind-key-to-func (key func)
   (dolist (prefix rinari-minor-mode-prefixes)
-    (eval `(define-key rinari-minor-mode-map 
+    (eval `(define-key rinari-minor-mode-map
              ,(format "\C-c%s%s" prefix key) ,func))))
 
 (defvar rinari-minor-mode-keybindings
