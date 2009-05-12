@@ -546,6 +546,7 @@ renders and redirects to find the final controller or view."
    (stylesheet "y" ((t . "public/stylesheets/.*")) nil)
    (javascript "j" ((t . "public/javascripts/.*")) nil)
    (plugin "u" ((t . "vendor/plugins/")) nil)
+   (metal "e" ((t . "app/metal/")) nil)
    (file-in-project "f" ((t . ".*")) nil)
    (by-context
     ";"
