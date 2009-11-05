@@ -544,6 +544,7 @@ renders and redirects to find the final controller or view."
    (worker "w" ((t . "lib/workers/")) nil)
    (public "p" ((t . "public/")) nil)
    (stylesheet "y" ((t . "public/stylesheets/.*")) nil)
+   (sass "Y" ((t . "public/stylesheets/sass/.*")) nil)
    (javascript "j" ((t . "public/javascripts/.*")) nil)
    (plugin "u" ((t . "vendor/plugins/")) nil)
    (metal "e" ((t . "app/metal/")) nil)
