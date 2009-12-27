@@ -326,9 +326,12 @@ With optional prefix argument just run `rgrep'."
   (interactive "P")
   (grep-compute-defaults)
   (if arg (call-interactively 'rgrep)
-    (let ((word (thing-at-point 'word)))
-      (funcall 'rgrep (read-from-minibuffer "search for: " word)
-	       rinari-rgrep-file-endings (rinari-root)))))
+    (let ((query))
+      (if mark-active
+          (setq query (buffer-substring-no-properties (point) (mark)))
+        (setq query (thing-at-point 'word)))
+      (funcall 'rgrep (read-from-minibuffer "search for: " query)
+               rinari-rgrep-file-endings (rinari-root)))))
 
 ;;--------------------------------------------------------------------
 ;; rinari movement using jump.el
