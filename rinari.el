@@ -283,22 +283,38 @@ don't include an '='."
   (if no-equals (backward-char 4) (backward-char 3)))
 
 (defun rinari-extract-partial (begin end partial-name)
+  "Extracts the selected region into a partial."
   (interactive "r\nsName your partial: ")
   (let* ((path (buffer-file-name)) ending)
     (if (string-match "view" path)
-	(let ((ending (and (string-match ".+?\\(\\.[^/]*\\)$" path)
-			   (match-string 1 path)))
-	      (partial-name
-	       (replace-regexp-in-string "[[:space:]]+" "_" partial-name)))
-	  (kill-region begin end)
-	  (if (string-match "\\(.+\\)/\\(.+\\)" partial-name)
-	      (let ((default-directory (expand-file-name (match-string 1 partial-name)
-							 (expand-file-name ".."))))
-		(find-file (concat "_" (match-string 2 partial-name) ending)))
-	    (find-file (concat "_" partial-name ending)))
-	  (yank) (pop-to-buffer nil)
-	  (insert (concat "<%= render :partial => '" partial-name "' %>\n")))
+        (let ((ending (and (string-match ".+?\\(\\.[^/]*\\)$" path)
+                           (match-string 1 path)))
+              (partial-name
+               (replace-regexp-in-string "[[:space:]]+" "_" partial-name)))
+          (kill-region begin end)
+          (if (string-match "\\(.+\\)/\\(.+\\)" partial-name)
+              (let ((default-directory (expand-file-name (match-string 1 partial-name)
+                                                         (expand-file-name ".."))))
+                (find-file (concat "_" (match-string 2 partial-name) ending)))
+            (find-file (concat "_" partial-name ending)))
+          (yank) (pop-to-buffer nil)
+          (rinari-insert-partial partial-name ending))
       (message "not in a view"))))
+
+(defun rinari-insert-partial (partial-name ending)
+  "Inserts the partial call in to the buffer. The snippet depends on
+the current file ending.
+
+Supported markup languages are: Erb, Haml"
+  (let ((prefix) (suffix))
+    (cond
+     ((string-match "\\(html\\)?\\.erb" ending)
+      (setq prefix "<%= ")
+      (setq suffix " %>"))
+     ((string-match "\\(html\\)?\\.haml" ending)
+      (setq prefix "= ")
+      (setq suffix " ")))
+    (insert (concat prefix "render :partial => \"" partial-name "\"" suffix "\n"))))
 
 (defvar rinari-rgrep-file-endings
   "*.[^l]*"
@@ -310,9 +326,12 @@ With optional prefix argument just run `rgrep'."
   (interactive "P")
   (grep-compute-defaults)
   (if arg (call-interactively 'rgrep)
-    (let ((word (thing-at-point 'word)))
-      (funcall 'rgrep (read-from-minibuffer "search for: " word)
-	       rinari-rgrep-file-endings (rinari-root)))))
+    (let ((query))
+      (if mark-active
+          (setq query (buffer-substring-no-properties (point) (mark)))
+        (setq query (thing-at-point 'word)))
+      (funcall 'rgrep (read-from-minibuffer "search for: " query)
+               rinari-rgrep-file-endings (rinari-root)))))
 
 ;;--------------------------------------------------------------------
 ;; rinari movement using jump.el
@@ -550,7 +569,7 @@ renders and redirects to find the final controller or view."
               (t . "app/stylesheets/.*")) nil)
    (javascript "j" ((t . "public/javascripts/.*")) nil)
    (plugin "u" ((t . "vendor/plugins/")) nil)
-   (metal "e" ((t . "app/metal/")) nil)
+   (metal "M" ((t . "app/metal/")) nil)
    (file-in-project "f" ((t . ".*")) nil)
    (by-context
     ";"
