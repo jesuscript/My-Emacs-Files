@@ -107,6 +107,9 @@ leave this to the environment variables outside of Emacs.")
   (list ";" "'")
   "List of characters, each of which will be bound (with C-c) as a rinari-minor-mode keymap prefix.")
 
+(defvar rinari-partial-regex "render :partial *=> *[@'\"]?\\([A-Za-z/_]+\\)['\"]?"
+  "Regex that matches a partial rendering call.")
+
 (defadvice ruby-compilation-do (around rinari-compilation-do activate)
   "Set default directory to the root of the rails application
   before running ruby processes."
@@ -285,11 +288,10 @@ don't include an '='."
 (defun rinari-extract-partial (begin end partial-name)
   "Extracts the selected region into a partial."
   (interactive "r\nsName your partial: ")
-  (let* ((path (buffer-file-name)) ending)
+  (let ((path (buffer-file-name))
+        (ending (rinari-ending)))
     (if (string-match "view" path)
-        (let ((ending (and (string-match ".+?\\(\\.[^/]*\\)$" path)
-                           (match-string 1 path)))
-              (partial-name
+        (let ((partial-name
                (replace-regexp-in-string "[[:space:]]+" "_" partial-name)))
           (kill-region begin end)
           (if (string-match "\\(.+\\)/\\(.+\\)" partial-name)
@@ -316,6 +318,18 @@ Supported markup languages are: Erb, Haml"
       (setq suffix " ")))
     (insert (concat prefix "render :partial => \"" partial-name "\"" suffix "\n"))))
 
+(defun rinari-goto-partial ()
+  "Visits the partial that is called on the current line."
+  (interactive)
+  (let ((line (buffer-substring-no-properties (line-beginning-position) (line-end-position))))
+    (when (string-match rinari-partial-regex line)
+      (setq line (match-string 1 line))
+      (let ((file))
+        (if (string-match "/" line)
+            (setq file (concat (rinari-root) "app/views/" (replace-regexp-in-string "\\([^/]+\\)/\\([^/]+\\)$" "\\1/_\\2" line)))
+          (setq file (concat default-directory "_" line)))
+        (find-file (concat file (rinari-ending)))))))
+
 (defvar rinari-rgrep-file-endings
   "*.[^l]*"
   "Ending of files to search for matches using `rinari-rgrep'")
@@ -332,6 +346,14 @@ With optional prefix argument just run `rgrep'."
         (setq query (thing-at-point 'word)))
       (funcall 'rgrep (read-from-minibuffer "search for: " query)
                rinari-rgrep-file-endings (rinari-root)))))
+
+(defun rinari-ending ()
+  "Returns the ending of the current file (ending being the file extension)."
+  (let* ((path (buffer-file-name))
+         (ending
+          (and (string-match ".+?\\(\\.[^/]*\\)$" path)
+               (match-string 1 path))))
+    ending))
 
 ;;--------------------------------------------------------------------
 ;; rinari movement using jump.el
@@ -621,7 +643,7 @@ behavior."
     ("e" . 'rinari-insert-erb-skeleton) ("t" . 'rinari-test)
     ("r" . 'rinari-rake)                ("c" . 'rinari-console)
     ("w" . 'rinari-web-server)          ("g" . 'rinari-rgrep)
-    ("x" . 'rinari-extract-partial)
+    ("x" . 'rinari-extract-partial)     ("p" . 'rinari-goto-partial)
     (";" . 'rinari-find-by-context)     ("'" . 'rinari-find-by-context)
     ("d" . 'rinari-cap))
   "alist mapping of keys to functions in `rinari-minor-mode'")
