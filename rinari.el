@@ -217,7 +217,7 @@ and links between errors and source code.  With optional prefix
 argument allows editing of the console command arguments."
   (interactive "P")
   (let* ((default-directory (rinari-root))
-         (script (concat (file-name-as-directory (expand-file-name "script" (rinari-root)))))
+         (script (rinari-script-path))
          (command
           (expand-file-name
            (if (file-exists-p (expand-file-name "console" script))
@@ -280,7 +280,7 @@ allowing jumping between errors and source code.  With optional prefix
 argument allows editing of the server command arguments."
   (interactive "P")
   (let* ((default-directory (rinari-root))
-         (script (concat (file-name-as-directory (expand-file-name "script" (rinari-root)))))
+         (script (rinari-script-path))
          (command
           (expand-file-name
            (if (file-exists-p (expand-file-name "server" script))
@@ -378,19 +378,23 @@ With optional prefix argument just run `rgrep'."
                (match-string 1 path))))
     ending))
 
+(defun rinari-script-path ()
+  "Returns the absolute path to the script folder."
+  (concat (file-name-as-directory (expand-file-name "script" (rinari-root)))))
+
 ;;--------------------------------------------------------------------
 ;; rinari movement using jump.el
 
 (defun rinari-generate (type name)
   (let* ((default-directory (rinari-root))
-        (script (concat (file-name-as-directory (expand-file-name "script" (rinari-root)))))
-        (command
-         (expand-file-name
-          (if (file-exists-p (expand-file-name "generate" script))
-              "generate"
-            "rails generate")
-          script)))
-      (message (shell-command-to-string (concat command " " type " " (read-from-minibuffer (format "create %s: " type) name))))))
+         (script (rinari-script-path))
+         (command
+          (expand-file-name
+           (if (file-exists-p (expand-file-name "generate" script))
+               "generate"
+             "rails generate")
+           script)))
+    (message (shell-command-to-string (concat command " " type " " (read-from-minibuffer (format "create %s: " type) name))))))
 
 (defvar rinari-ruby-hash-regexp
   "\\(:[^[:space:]]*?\\)[[:space:]]*\\(=>[[:space:]]*[\"\':]?\\([^[:space:]]*?\\)[\"\']?[[:space:]]*\\)?[,){}\n]"
