@@ -212,17 +212,28 @@ argument allows editing of the test command arguments."
       (message "no test available"))))
 
 (defun rinari-console (&optional edit-cmd-args)
-  "Run script/console in a compilation buffer, with command
-history and links between errors and source code.  With optional
-prefix argument allows editing of the console command arguments."
+  "Runs a Rails console in a compilation buffer, with command history
+and links between errors and source code.  With optional prefix
+argument allows editing of the console command arguments."
   (interactive "P")
-  (let* ((script ;; (concat (rinari-root) "script/console")
-	  (concat (expand-file-name "console" (file-name-as-directory
-					       (expand-file-name "script" (rinari-root))))
-		  (if rinari-rails-env (concat " " rinari-rails-env))))
-	 (command (if edit-cmd-args
-			      (read-string "Run Ruby: " (concat script " "))
-			    script)))
+  (let* ((script (concat (file-name-as-directory (expand-file-name "script" (rinari-root)))))
+         (command
+          (expand-file-name
+           (if (file-exists-p (expand-file-name "console" script))
+               "console"
+             "rails console")
+           script)))
+
+    ;; Start console in correct environment.
+    (if rinari-rails-env
+        (setq command (concat command " " rinari-rails-env)))
+
+    ;; For customization of the console command with prefix arg.
+    (setq command (if edit-cmd-args
+                      (read-string "Run Ruby: " (concat command " "))
+                    command))
+
+    (cd (rinari-root))
     (run-ruby command)
     (save-excursion
       (set-buffer "*ruby*")
