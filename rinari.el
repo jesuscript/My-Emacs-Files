@@ -382,9 +382,15 @@ With optional prefix argument just run `rgrep'."
 ;; rinari movement using jump.el
 
 (defun rinari-generate (type name)
-  (message (shell-command-to-string
-	    (format "ruby %sscript/generate %s %s" (rinari-root) type
-		    (read-from-minibuffer (format "create %s: " type) name)))))
+  (let* ((default-directory (rinari-root))
+        (script (concat (file-name-as-directory (expand-file-name "script" (rinari-root)))))
+        (command
+         (expand-file-name
+          (if (file-exists-p (expand-file-name "generate" script))
+              "generate"
+            "rails generate")
+          script)))
+      (message (shell-command-to-string (concat command " " type " " (read-from-minibuffer (format "create %s: " type) name))))))
 
 (defvar rinari-ruby-hash-regexp
   "\\(:[^[:space:]]*?\\)[[:space:]]*\\(=>[[:space:]]*[\"\':]?\\([^[:space:]]*?\\)[\"\']?[[:space:]]*\\)?[,){}\n]"
