@@ -275,19 +275,31 @@ from your conf/database.sql file."
 	  (rename-buffer (sql-name environment)) (rinari-launch))))))
 
 (defun rinari-web-server (&optional edit-cmd-args)
-  "Run script/server.  Dump output to a compilation buffer
-allowing jumping between errors and source code.  With optional
-prefix argument allows editing of the server command arguments."
+  "Starts a Rails webserver.  Dumps output to a compilation buffer
+allowing jumping between errors and source code.  With optional prefix
+argument allows editing of the server command arguments."
   (interactive "P")
   (let* ((default-directory (rinari-root))
-	 (script (concat (expand-file-name "server"
-					   (file-name-as-directory
-					    (expand-file-name "script" (rinari-root))))
-			 (if rinari-rails-env (concat " -e " rinari-rails-env))))
-	 (command (if edit-cmd-args
-		      (read-string "Run Ruby: " (concat script " "))
-		    script)))
-    (ruby-compilation-run command)) (rinari-launch))
+         (script (concat (file-name-as-directory (expand-file-name "script" (rinari-root)))))
+         (command
+          (expand-file-name
+           (if (file-exists-p (expand-file-name "server" script))
+               "server"
+             "rails server")
+           script)))
+
+    ;; Start web server in correct environment.
+    ;; NOTE: Rails 3 has a bug and does not start in any environment but development for now.
+    (if rinari-rails-env
+        (setq command (concat command " -e " rinari-rails-env)))
+
+    ;; For customization of the web server command with prefix arg.
+    (setq command (if edit-cmd-args
+                      (read-string "Run Ruby: " (concat command " "))
+                    command))
+
+    (ruby-compilation-run command))
+  (rinari-launch))
 
 (defun rinari-insert-erb-skeleton (no-equals)
   "Insert an erb skeleton at point, with optional prefix argument
