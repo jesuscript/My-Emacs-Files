@@ -613,6 +613,7 @@ renders and redirects to find the final controller or view."
 		       (and (string-match ".*/\\(.+?\\)_cell\.rb" path)
 			    (match-string 1 path)))))
    (environment "e" ((t . "config/environments/")) nil)
+   (application "a" ((t . "config/application.rb")) nil)
    (configuration "n" ((t . "config/")) nil)
    (script "s" ((t . "script/")) nil)
    (lib "l" ((t . "lib/")) nil)
