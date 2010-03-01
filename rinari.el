@@ -216,7 +216,8 @@ argument allows editing of the test command arguments."
 and links between errors and source code.  With optional prefix
 argument allows editing of the console command arguments."
   (interactive "P")
-  (let* ((script (concat (file-name-as-directory (expand-file-name "script" (rinari-root)))))
+  (let* ((default-directory (rinari-root))
+         (script (concat (file-name-as-directory (expand-file-name "script" (rinari-root)))))
          (command
           (expand-file-name
            (if (file-exists-p (expand-file-name "console" script))
@@ -233,7 +234,6 @@ argument allows editing of the console command arguments."
                       (read-string "Run Ruby: " (concat command " "))
                     command))
 
-    (cd (rinari-root))
     (run-ruby command)
     (save-excursion
       (set-buffer "*ruby*")
