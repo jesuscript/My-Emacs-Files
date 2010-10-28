@@ -301,6 +301,18 @@ argument allows editing of the server command arguments."
     (ruby-compilation-run command))
   (rinari-launch))
 
+(defun rinari-web-server-restart (&optional edit-cmd-args)
+  "If rinari-web-server is running, kill it and start a new server, otherwise just launch the server"
+  (interactive "P")
+  (let ((rinari-web-server-buffer "*server*"))
+  (if (get-buffer rinari-web-server-buffer)
+      (progn
+        (set-process-query-on-exit-flag (get-buffer-process rinari-web-server-buffer) nil)
+        (kill-buffer rinari-web-server-buffer))
+    nil)
+    (rinari-web-server edit-cmd-args)))
+
+
 (defun rinari-insert-erb-skeleton (no-equals)
   "Insert an erb skeleton at point, with optional prefix argument
 don't include an '='."
