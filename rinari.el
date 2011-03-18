@@ -270,7 +270,10 @@ from your conf/database.sql file."
 	       (server (or (cdr (assoc "host" database-alist)) "localhost"))
 	       (port (cdr (assoc "port" database-alist)))
 	       (sql-server (if port (concat server ":" port) server)))
-	  (if (string-match "sqlite" adapter) (setf adapter "sqlite"))
+	  (cond ((string-match "sqlite" adapter) 
+		 (setf adapter "sqlite"))
+		((string-match "postgresql" adapter) 
+		 (setf adapter "postgres")))
 	  (eval (list (intern (concat "sql-" adapter))))
 	  (rename-buffer (sql-name environment)) (rinari-launch))))))
 
