@@ -192,14 +192,12 @@ test, then try to jump to the related test using
 jumping between errors and source code.  With optional prefix
 argument allows editing of the test command arguments."
   (interactive "P")
-  (or (string-match "test" (or (ruby-add-log-current-method)
+  (or (rinari-test-function-name)
+      (string-match "test" (or (ruby-add-log-current-method)
 			       (file-name-nondirectory (buffer-file-name))))
       (rinari-find-test))
-  (let* ((funname (ruby-add-log-current-method))
-	 (fn (and funname
-		  (string-match "#\\(.*\\)" funname)
-		  (match-string 1 funname)))
-	 (path (buffer-file-name))
+  (let* ((fn (rinari-test-function-name))
+         (path (buffer-file-name))
          (ruby-options (list "-I" (expand-file-name "test" (rinari-root)) path))
 	 (default-command (mapconcat
                            'identity
@@ -210,6 +208,18 @@ argument allows editing of the test command arguments."
                     default-command)))
     (if path (ruby-compilation-run command ruby-options)
       (message "no test available"))))
+
+(defun rinari-test-function-name()
+  (save-excursion
+    (if (re-search-backward (concat "^[ \t]*\\(def\\|test\\)[ \t]+"
+                                    "\\([\"'].*?[\"']\\|" ruby-symbol-re "*\\)"
+                                    "[ \t]*") nil t)
+        (let ((name (match-string 2)))
+          (if (string-match "^[\"']\\(.*\\)[\"']$" name)
+              (replace-regexp-in-string " +" "_" (match-string 1 name))
+            (if (string-match "^test" name)
+              name))))))
+
 
 (defun rinari-console (&optional edit-cmd-args)
   "Runs a Rails console in a compilation buffer, with command history
