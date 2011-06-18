@@ -313,7 +313,7 @@ argument allows editing of the server command arguments."
                       (read-string "Run Ruby: " (concat command " "))
                     command))
 
-    (ruby-compilation-run command))
+    (ruby-compilation-run command nil "server"))
   (rinari-launch))
 
 (defun rinari-web-server-restart (&optional edit-cmd-args)

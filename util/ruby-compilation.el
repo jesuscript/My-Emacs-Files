@@ -108,10 +108,12 @@ exec-to-string command, but it works and seems fast"
 		     (split-string (shell-command-to-string "cap -T") "[\n]"))))
 
 ;;;###autoload
-(defun ruby-compilation-run (cmd &optional ruby-options)
-  "Run a ruby process dumping output to a ruby compilation buffer."
+(defun ruby-compilation-run (cmd &optional ruby-options name)
+  "Run a ruby process dumping output to a ruby compilation
+buffer. If supplied, `name' will be used in place of the script
+name to construct the name of the compilation buffer."
   (interactive "FRuby Comand: ")
-  (let ((name (file-name-nondirectory (car (split-string cmd))))
+  (let ((name (or name (file-name-nondirectory (car (split-string cmd)))))
 	(cmdlist (append (list ruby-compilation-executable)
                          ruby-options
                          (split-string (expand-file-name cmd)))))
