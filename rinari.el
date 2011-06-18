@@ -247,8 +247,8 @@ argument allows editing of the console command arguments."
     (run-ruby command)
     (save-excursion
       (set-buffer "*ruby*")
-      (set (make-local-variable 'inf-ruby-first-prompt-pattern) "^>> ")
-      (set (make-local-variable 'inf-ruby-prompt-pattern) "^>> ")
+      (set (make-local-variable 'inf-ruby-prompt-pattern) "^\\([a-zA-Z0-9.\-]+ :[0-9]+ >\\|>>\\) ")
+      (set (make-local-variable 'inf-ruby-first-prompt-pattern) inf-ruby-prompt-pattern)
       (rinari-launch))))
 
 (defun rinari-sql ()
