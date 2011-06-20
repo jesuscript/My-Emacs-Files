@@ -216,7 +216,9 @@ argument allows editing of the test command arguments."
                                     "[ \t]*") nil t)
         (let ((name (match-string 2)))
           (if (string-match "^[\"']\\(.*\\)[\"']$" name)
-              (replace-regexp-in-string " +" "_" (match-string 1 name))
+              (replace-regexp-in-string
+               "\\?" "\\\\\\\\?"
+               (replace-regexp-in-string " +" "_" (match-string 1 name)))
             (if (string-match "^test" name)
               name))))))
 
