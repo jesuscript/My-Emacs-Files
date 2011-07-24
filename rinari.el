@@ -171,6 +171,31 @@ allows editing of the cap command arguments."
   (ruby-compilation-cap task edit-cmd-args
 			(if rinari-rails-env (list (cons "RAILS_ENV" rinari-rails-env)))))
 
+(defun rinari-discover-rails-commands ()
+  (let ((root (rinari-root))
+        (commands nil))
+    (if (file-executable-p (concat root "script/rails"))
+        (save-window-excursion
+          (save-excursion
+            (ruby-compilation-run (concat root "script/rails") nil "*rails-help*")
+            (while (get-buffer-process (current-buffer))
+              (sit-for 1))
+            (beginning-of-buffer)
+            (while (re-search-forward "^ \\([a-z]+\\)" nil t)
+              (add-to-list 'commands
+                           (buffer-substring-no-properties
+                            (match-beginning 1) (match-end 1))))
+            (kill-buffer))
+          commands))))
+
+(defvar rinari-rails-commands-cache nil
+  "Cached values for commands that can be used with 'scrip/rails' in Rails 3")
+
+(defun rinari-get-rails-commands ()
+  (if (null rinari-rails-commands-cache)
+      (setq rinari-rails-commands-cache (rinari-discover-rails-commands)))
+  rinari-rails-commands-cache)
+
 (defun rinari-script (&optional script)
   "Tab completing selection of a script from the script/
 directory of the rails application."
@@ -178,12 +203,7 @@ directory of the rails application."
   (let* ((root (rinari-root))
          (rails3 (file-executable-p (concat root "script/rails")))
          (completions (directory-files (concat root "script") nil "^[^.]"))
-         (completions (if rails3
-                          (dolist (item '("generate" "console" "server" "dbconsole"
-                                          "destroy" "benchmarker" "profiler"
-                                          "plugin" "runner") completions)
-                            (add-to-list 'completions item))
-                        completions))
+         (completions (nconc completions (rinari-get-rails-commands)))
 	 (script (or script
 		     (completing-read "Script: " completions)))
 	 (ruby-compilation-error-regexp-alist ;; for jumping to newly created files
