@@ -176,14 +176,24 @@ allows editing of the cap command arguments."
 directory of the rails application."
   (interactive)
   (let* ((root (rinari-root))
+         (rails3 (file-executable-p (concat root "script/rails")))
+         (completions (directory-files (concat root "script") nil "^[^.]"))
+         (completions (if rails3
+                          (dolist (item '("generate" "console" "server" "dbconsole"
+                                          "destroy" "benchmarker" "profiler"
+                                          "plugin" "runner") completions)
+                            (add-to-list 'completions item))
+                        completions))
 	 (script (or script
-		     (completing-read "Script: " (directory-files (concat root "script") nil "^[^.]"))))
+		     (completing-read "Script: " completions)))
 	 (ruby-compilation-error-regexp-alist ;; for jumping to newly created files
 	  (if (equal script "generate")
 	      '(("^ +\\(exists\\|create\\) +\\([^[:space:]]+\\.rb\\)" 2 3))
 	    ruby-compilation-error-regexp-alist))
-	 (script (concat "script/" script " ")))
-    (ruby-compilation-run (concat root script (read-from-minibuffer script)))))
+	 (script (if (file-executable-p (concat root "script/" script))
+                 (concat "script/" script " ")
+               (concat "script/rails " script " "))))
+      (ruby-compilation-run (concat root script (read-from-minibuffer script)))))
 
 (defun rinari-test (&optional edit-cmd-args)
   "Test the current ruby function.  If current function is not a
