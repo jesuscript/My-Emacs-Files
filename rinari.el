@@ -175,21 +175,15 @@ allows editing of the cap command arguments."
   (let ((root (rinari-root))
         (commands nil))
     (if (file-executable-p (concat root "script/rails"))
-        (save-window-excursion
+        (let ((s (shell-command-to-string (concat root "script/rails")))
+              (start 0))
           (save-excursion
-            (ruby-compilation-run (concat root "script/rails") nil "*rails-help*")
-            (while (get-buffer-process (current-buffer))
-              (sit-for 1))
-            (beginning-of-buffer)
-            (while (re-search-forward "^ \\([a-z]+\\)" nil t)
-              (add-to-list 'commands
-                           (buffer-substring-no-properties
-                            (match-beginning 1) (match-end 1))))
-            (kill-buffer))
-          commands))))
+            (loop while (string-match "^ \\([a-z]+\\)[[:space:]].*$" s start)
+                  do (setq start (match-end 0))
+                  collecting (substring-no-properties (match-string 1 s))))))))
 
 (defvar rinari-rails-commands-cache nil
-  "Cached values for commands that can be used with 'scrip/rails' in Rails 3")
+  "Cached values for commands that can be used with 'script/rails' in Rails 3")
 
 (defun rinari-get-rails-commands ()
   (if (null rinari-rails-commands-cache)
@@ -202,18 +196,17 @@ directory of the rails application."
   (interactive)
   (let* ((root (rinari-root))
          (rails3 (file-executable-p (concat root "script/rails")))
-         (completions (directory-files (concat root "script") nil "^[^.]"))
-         (completions (nconc completions (rinari-get-rails-commands)))
-	 (script (or script
-		     (completing-read "Script: " completions)))
-	 (ruby-compilation-error-regexp-alist ;; for jumping to newly created files
+         (completions (append (directory-files (concat root "script") nil "^[^.]")
+                              (rinari-get-rails-commands)))
+	 (script (or script (jump-completing-read "Script: " completions)))
+	 (ruby-compilation-error-regexp ;; for jumping to newly created files
 	  (if (equal script "generate")
 	      '(("^ +\\(exists\\|create\\) +\\([^[:space:]]+\\.rb\\)" 2 3))
 	    ruby-compilation-error-regexp-alist))
 	 (script (if (file-executable-p (concat root "script/" script))
-                 (concat "script/" script " ")
-               (concat "script/rails " script " "))))
-      (ruby-compilation-run (concat root script (read-from-minibuffer script)))))
+                     (concat "script/" script " ")
+                   (concat "script/rails " script " "))))
+    (ruby-compilation-run (concat root script (read-from-minibuffer script)))))
 
 (defun rinari-test (&optional edit-cmd-args)
   "Test the current ruby function.  If current function is not a
