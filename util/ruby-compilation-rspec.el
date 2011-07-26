@@ -11,11 +11,8 @@
 (add-hook 'ruby-mode-hook (lambda ()
                             (when (and (not (null buffer-file-name)) (string-match "_spec.rb$" buffer-file-name))
                               (set (make-local-variable 'ruby-compilation-executable)
-                                   (if (some (lambda (x)
-                                               (file-executable-p (expand-file-name "rspec" x)))
-                                             exec-path)
-                                       "rspec"
-                                   "spec"))
+                                   (or (executable-find "rspec")
+                                       (executable-find "spec")))
                               (set (make-local-variable 'ruby-compilation-test-name-flag)
                                    "-l"))))
 
