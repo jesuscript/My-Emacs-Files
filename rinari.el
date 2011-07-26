@@ -199,7 +199,7 @@ directory of the rails application."
          (completions (append (directory-files (concat root "script") nil "^[^.]")
                               (rinari-get-rails-commands)))
 	 (script (or script (jump-completing-read "Script: " completions)))
-	 (ruby-compilation-error-regexp ;; for jumping to newly created files
+	 (ruby-compilation-error-regexp-alist ;; for jumping to newly created files
 	  (if (equal script "generate")
 	      '(("^ +\\(exists\\|create\\) +\\([^[:space:]]+\\.rb\\)" 2 3))
 	    ruby-compilation-error-regexp-alist))
