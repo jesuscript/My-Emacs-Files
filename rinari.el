@@ -273,8 +273,7 @@ argument allows editing of the console command arguments."
                     command))
 
     (run-ruby command)
-    (save-excursion
-      (set-buffer "*ruby*")
+    (with-current-buffer "*ruby*"
       (set (make-local-variable 'inf-ruby-prompt-pattern) "^\\(j?ruby[^> ]+\\|J?RUBY[^> ]+\\|irb([^> ]+\\)?\\( ?:[0-9]+\\)* ?>>? ")
       (set (make-local-variable 'inf-ruby-first-prompt-pattern) inf-ruby-prompt-pattern)
       (rinari-launch))))
@@ -736,12 +735,12 @@ behavior."
     ("d" . 'rinari-cap))
   "alist mapping of keys to functions in `rinari-minor-mode'")
 
-(mapcar (lambda (el) (rinari-bind-key-to-func (car el) (cdr el)))
-        (append (mapcar (lambda (el)
-                          (cons (concat "f" (second el))
-                                (read (format "'rinari-find-%S" (first el)))))
-                        rinari-jump-schema)
-                rinari-minor-mode-keybindings))
+(dolist (el (append (mapcar (lambda (el)
+                              (cons (concat "f" (second el))
+                                    (read (format "'rinari-find-%S" (first el)))))
+                            rinari-jump-schema)
+                    rinari-minor-mode-keybindings))
+  (rinari-bind-key-to-func (car el) (cdr el)))
 
 ;;;###autoload
 (defun rinari-launch ()
