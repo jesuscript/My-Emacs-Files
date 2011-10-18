@@ -3,11 +3,11 @@
 ;; Copyright (C) 2008 Eric Schulte
 
 ;; Author: Eric Schulte
-;; URL: http://www.emacswiki.org/cgi-bin/emacs/ruby-compilation.el
-;; Version: 0.7
+;; URL: https://github.com/eschulte/rinari
+;; Version: 0.8
 ;; Created: 2008-08-23
 ;; Keywords: test convenience
-;; Package-Requires: ((ruby-mode "1.1") (inf-ruby "2.1"))
+;; Package-Requires: ((ruby-mode "1.1") (inf-ruby "2.2.1"))
 
 ;;; License:
 
