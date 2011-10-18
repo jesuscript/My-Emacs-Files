@@ -2,13 +2,13 @@
 
 ;; Copyright (C) 2008 Phil Hagelberg, Eric Schulte
 
-;; Authors: Phil Hagelberg, Eric Schulte
-;; URL: http://rinari.rubyforge.org
-;; Version: 2.1
+;; Author: Phil Hagelberg, Eric Schulte
+;; URL: https://github.com/eschulte/rinari
+;; Version: DEV
 ;; Created: 2006-11-10
 ;; Keywords: ruby, rails, project, convenience, web
 ;; EmacsWiki: Rinari
-;; Package-Requires: ((ruby-mode "1.1") (inf-ruby "2.1") (ruby-compilation "0.7") (jump "2.0"))
+;; Package-Requires: ((ruby-mode "1.1") (inf-ruby "2.2.1") (ruby-compilation "0.8") (jump "2.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
