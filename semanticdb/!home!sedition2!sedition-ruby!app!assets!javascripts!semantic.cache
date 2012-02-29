@@ -1,0 +1,45 @@
+;; Object javascripts/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "javascripts/"
+  :tables (list 
+   (semanticdb-table "jquery.sedition.giftWidget.js"
+    :major-mode 'js-mode
+    :tags nil
+    :file "jquery.sedition.giftWidget.js"
+    :pointmax 2323
+    :fsize 2322
+    :lastmodtime '(20301 6729)
+    :unmatched-syntax '((PAREN_BLOCK 1 . 2322) (PAREN_BLOCK 1 . 2329))
+    )
+   (semanticdb-table "jquery.sedition.cart.js"
+    :major-mode 'js-mode
+    :tags nil
+    :file "jquery.sedition.cart.js"
+    :pointmax 2765
+    :fsize 2761
+    :lastmodtime '(20301 6511)
+    :unmatched-syntax '((PAREN_BLOCK 57 . 2763) (PAREN_BLOCK 57 . 2764) (PAREN_BLOCK 57 . 2763) (PAREN_BLOCK 57 . 2627) (PAREN_BLOCK 57 . 2763) (PAREN_BLOCK 57 . 2790) (PAREN_BLOCK 57 . 2763))
+    )
+   (semanticdb-table "jquery.sedition.wisherMenu.js"
+    :major-mode 'js-mode
+    :tags nil
+    :file "jquery.sedition.wisherMenu.js"
+    :pointmax 962
+    :fsize 961
+    :lastmodtime '(20293 7218)
+    :unmatched-syntax '((PAREN_BLOCK 755 . 961) (PAREN_BLOCK 1 . 752))
+    )
+   (semanticdb-table "application.js"
+    :major-mode 'js-mode
+    :tags nil
+    :file "application.js"
+    :pointmax 2507
+    :fsize 2506
+    :lastmodtime '(20301 6683)
+    :unmatched-syntax '((SEMICOLON 949 . 950) (PAREN_BLOCK 952 . 2506) (SEMICOLON 673 . 674) (VARIABLE 676 . 684) (FUNCTION 700 . 708) (PAREN_BLOCK 708 . 710) (BRACE_BLOCK 551 . 553) (SEMICOLON 553 . 554) (VARIABLE 555 . 563) (FUNCTION 580 . 588) (PAREN_BLOCK 588 . 595))
+    )
+   )
+  :file "!home!sedition2!sedition-ruby!app!assets!javascripts!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.0"
+  )
