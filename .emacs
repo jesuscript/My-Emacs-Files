@@ -39,7 +39,7 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 
-(define-key ac-complete-mode-map "\t" 'ac-complete)
+;(define-key ac-complete-mode-map "\t" 'ac-complete)
 (define-key ac-complete-mode-map "\r" nil)
 
 (defun select-next-window ()
@@ -83,6 +83,7 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-c\C-k" 'kill-region)
 
+
 ;; Interactively Do Things (highly recommended, but not strictly required)
 (require 'ido)
 (ido-mode t)
@@ -110,8 +111,6 @@
           (lambda ()
             (c-set-offset 'arglist-intro '+)
             (c-set-offset 'arglist-close 0)))
-
-(setq ruby-deep-indent-paren nil)
 
 
 (setq rsense-home "/opt/rsense-0.3")
