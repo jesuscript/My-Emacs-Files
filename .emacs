@@ -75,13 +75,6 @@
           (lambda () (rinari-launch)))
 
 
-(global-set-key (kbd "M-]") 'select-next-window)
-(global-set-key (kbd "M-[")  'select-previous-window)
-
-
-(global-set-key "\C-w" 'backward-kill-word)
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-c\C-k" 'kill-region)
 
 
 ;; Interactively Do Things (highly recommended, but not strictly required)
@@ -116,6 +109,18 @@
 (setq rsense-home "/opt/rsense-0.3")
 (add-to-list 'load-path (concat rsense-home "/etc"))
 (require 'rsense)
+
+
+;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
+
+
+(global-set-key (kbd "M-]") 'select-next-window)
+(global-set-key (kbd "M-[")  'select-previous-window)
+
+
+(global-set-key "\C-w" 'backward-kill-word)
+(global-set-key "\C-x\C-k" 'kill-region)
+(global-set-key "\C-x\C-o" 'goto-line)
 
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
