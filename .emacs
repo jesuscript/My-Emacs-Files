@@ -1,5 +1,5 @@
 (setq load-path
-      (append (list nil "/home/sedition2/.emacs.d")
+      (append (list nil "$HOME/.emacs.d")
 	      load-path))
 
 (global-font-lock-mode 1)
@@ -106,10 +106,14 @@
             (c-set-offset 'arglist-close 0)))
 
 
-(setq rsense-home "/opt/rsense-0.3")
+(setq rsense-home "~/.emacs.d/rsense")
 (add-to-list 'load-path (concat rsense-home "/etc"))
 (require 'rsense)
 
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (add-to-list 'ac-sources 'ac-source-rsense-method)
+            (add-to-list 'ac-sources 'ac-source-rsense-constant)))
 
 ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
 
@@ -117,11 +121,11 @@
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
 
-
 (global-set-key "\C-w" 'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-x\C-o" 'goto-line)
 
+(global-set-key (kbd "C-c ; C-w") 'rinari-web-server-restart)
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
 (fset 'erb-echo-tag
