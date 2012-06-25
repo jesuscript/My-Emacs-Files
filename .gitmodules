@@ -1,0 +1,6 @@
+[submodule "rinari"]
+	path = rinari
+	url = git@github.com:kkudryavtsev/rinari.git
+[submodule "rhtml"]
+	path = rhtml
+	url = git://github.com/eschulte/rhtml.git
