@@ -81,6 +81,18 @@
 (require 'ido)
 (ido-mode t)
 
+;; autopair
+(electric-pair-mode t)
+
+;; coffeescript
+(add-to-list 'load-path "~/.emacs.d/coffee-mode")
+(require 'coffee-mode)
+ (custom-set-variables '(coffee-tab-width 2))
+;; automatically clean up bad whitespace
+(setq whitespace-action '(auto-cleanup)) 
+;; only show bad whitespace
+(setq whitespace-style '(trailing space-before-tab indentation empty space-after-tab)) 
+
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
@@ -140,6 +152,7 @@
       "<% end %>")
 (global-set-key (kbd "C-c e") 'erb-end-tag)
 
+
 (fset 'indent-all-file
       "\C-[<\C-@\C-[>\C-[\C-\\\C-u\C-@\C-u\C-@")
-(global-set-key (kbd "C-c ]") 'indent-all-file)
+(global-set-key (kbd "C-c [") 'indent-all-file)
