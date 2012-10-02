@@ -128,8 +128,6 @@
             (add-to-list 'ac-sources 'ac-source-rsense-constant)))
 
 ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
-
-
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
 
@@ -152,7 +150,7 @@
       "<% end %>")
 (global-set-key (kbd "C-c e") 'erb-end-tag)
 
-
 (fset 'indent-all-file
       "\C-[<\C-@\C-[>\C-[\C-\\\C-u\C-@\C-u\C-@")
 (global-set-key (kbd "C-c [") 'indent-all-file)
+
