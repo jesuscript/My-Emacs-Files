@@ -75,11 +75,25 @@
           (lambda () (rinari-launch)))
 
 
-
+;; Helm
+(add-to-list 'load-path "~/.emacs.d/helm")
+(require 'helm-config)
 
 ;; Interactively Do Things (highly recommended, but not strictly required)
 (require 'ido)
 (ido-mode t)
+
+;; autopair
+(electric-pair-mode t)
+
+;; coffeescript
+(add-to-list 'load-path "~/.emacs.d/coffee-mode")
+(require 'coffee-mode)
+ (custom-set-variables '(coffee-tab-width 2))
+;; automatically clean up bad whitespace
+(setq whitespace-action '(auto-cleanup)) 
+;; only show bad whitespace
+(setq whitespace-style '(trailing space-before-tab indentation empty space-after-tab)) 
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
@@ -119,8 +133,6 @@
 (require 'project-grep)
 
 ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
-
-
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
 
@@ -147,4 +159,5 @@
 
 (fset 'indent-all-file
       "\C-[<\C-@\C-[>\C-[\C-\\\C-u\C-@\C-u\C-@")
-(global-set-key (kbd "C-c ]") 'indent-all-file)
+(global-set-key (kbd "C-c [") 'indent-all-file)
+
