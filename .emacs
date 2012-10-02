@@ -115,6 +115,9 @@
             (add-to-list 'ac-sources 'ac-source-rsense-method)
             (add-to-list 'ac-sources 'ac-source-rsense-constant)))
 
+
+(require 'project-grep)
+
 ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
 
 
@@ -126,6 +129,8 @@
 (global-set-key "\C-x\C-o" 'goto-line)
 
 (global-set-key (kbd "C-c ; C-w") 'rinari-web-server-restart)
+
+(global-set-key (kbd "C-c . g") 'project-grep)
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
 (fset 'erb-echo-tag
