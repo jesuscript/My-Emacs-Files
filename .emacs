@@ -75,7 +75,9 @@
           (lambda () (rinari-launch)))
 
 
-
+;; Helm
+(add-to-list 'load-path "~/.emacs.d/helm")
+(require 'helm-config)
 
 ;; Interactively Do Things (highly recommended, but not strictly required)
 (require 'ido)
