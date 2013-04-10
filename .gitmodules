@@ -9,4 +9,4 @@
 	url = git://github.com/defunkt/coffee-mode.git
 [submodule "helm"]
 	path = helm
-	url = https://github.com/emacs-helm/helm.git
+	url = git://github.com/emacs-helm/helm.git

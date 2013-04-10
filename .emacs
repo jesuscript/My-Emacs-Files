@@ -178,6 +178,16 @@
       "\C-[<\C-@\C-[>\C-[\C-\\\C-u\C-@\C-u\C-@")
 (global-set-key (kbd "C-c [") 'indent-all-file)
 
+
+
+;;;;;;;;;;;;;;;;;;;;; FACES  ;;;;;;;;;;;;;;;;;;;;;
+
+(set-face-foreground 'button "#ffffff")
+(set-face-foreground 'comint-highlight-prompt "#ffffff")
+(set-face-foreground 'link "#ffffff")
+(set-face-foreground 'minibuffer-prompt "#ffffff")
+(set-face-foreground 'tool-bar "#ffffff")
+
 ;;;;;;;;;;;;;;;;; EMACS BACKUPS  ;;;;;;;;;;;;;;;;;
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
