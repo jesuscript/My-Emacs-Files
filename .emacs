@@ -95,7 +95,7 @@
 ;; only show bad whitespace
 (setq whitespace-style '(trailing space-before-tab indentation empty space-after-tab)) 
 
-;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+
 (defun rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
@@ -111,6 +111,7 @@
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
 
+;;ZenCoding
 (require 'zencoding-mode)
 (add-hook 'sgml-mode-hook 'zencoding-mode)
 
@@ -119,7 +120,7 @@
             (c-set-offset 'arglist-intro '+)
             (c-set-offset 'arglist-close 0)))
 
-
+;;rsense
 (setq rsense-home "~/.emacs.d/rsense")
 (add-to-list 'load-path (concat rsense-home "/etc"))
 (require 'rsense)
@@ -129,21 +130,33 @@
             (add-to-list 'ac-sources 'ac-source-rsense-method)
             (add-to-list 'ac-sources 'ac-source-rsense-constant)))
 
-
+;;project grep
 (require 'project-grep)
+
+;;handlebars
+(require 'handlebars-mode)
 
 ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
 
 (global-set-key "\C-w" 'backward-kill-word)
+(global-set-key "\C-h" 'backward-delete-char)
+
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-x\C-o" 'goto-line)
 
 (global-set-key (kbd "C-c ; C-w") 'rinari-web-server-restart)
 
 (global-set-key (kbd "C-c . g") 'project-grep)
+
+(global-set-key (kbd "C-z") 'undo)
+
+(define-key zencoding-mode-keymap (kbd "C-j") nil)
+(define-key zencoding-mode-keymap (kbd "M-j") 'zencoding-expand-line)
+
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
+
 
 (fset 'erb-echo-tag
       "<%= %>\C-b\C-b\C-b ")
@@ -153,6 +166,10 @@
       "<% %>\C-b\C-b\C-b ")
 (global-set-key (kbd "C-c u") 'erb-tag)
 
+(fset 'js-log
+      "console.log()\C-b")
+(global-set-key (kbd "C-c c") 'js-log)
+
 (fset 'erb-end-tag
       "<% end %>")
 (global-set-key (kbd "C-c e") 'erb-end-tag)
@@ -161,3 +178,12 @@
       "\C-[<\C-@\C-[>\C-[\C-\\\C-u\C-@\C-u\C-@")
 (global-set-key (kbd "C-c [") 'indent-all-file)
 
+;;;;;;;;;;;;;;;;; EMACS BACKUPS  ;;;;;;;;;;;;;;;;;
+
+(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
+  backup-by-copying t    ; Don't delink hardlinks
+  version-control t      ; Use version numbers on backups
+  delete-old-versions t  ; Automatically delete excess backups
+  kept-new-versions 20   ; how many of the newest versions to keep
+  kept-old-versions 5    ; and how many of the old
+  )
