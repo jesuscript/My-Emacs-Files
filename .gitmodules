@@ -10,3 +10,6 @@
 [submodule "ack-el"]
 	path = ack-el
 	url = git@github.com:leoliu/ack-el.git
+[submodule "rinari"]
+	path = rinari
+	url = git://github.com/eschulte/rinari.git
