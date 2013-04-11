@@ -10,3 +10,6 @@
 [submodule "helm"]
 	path = helm
 	url = git://github.com/emacs-helm/helm.git
+[submodule "ack-el"]
+	path = ack-el
+	url = git@github.com:leoliu/ack-el.git
