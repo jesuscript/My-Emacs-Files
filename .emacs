@@ -1,3 +1,5 @@
+(server-start)
+
 (setq load-path
       (append (list nil "$HOME/.emacs.d")
 	      load-path))
@@ -13,6 +15,7 @@
 
 
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
+
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.less" . css-mode))
@@ -39,7 +42,7 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 
-;(define-key ac-complete-mode-map "\t" 'ac-complete)
+                                        ;(define-key ac-complete-mode-map "\t" 'ac-complete)
 (define-key ac-complete-mode-map "\r" nil)
 
 (defun select-next-window ()
@@ -89,7 +92,7 @@
 ;; coffeescript
 (add-to-list 'load-path "~/.emacs.d/coffee-mode")
 (require 'coffee-mode)
- (custom-set-variables '(coffee-tab-width 2))
+(custom-set-variables '(coffee-tab-width 2))
 ;; automatically clean up bad whitespace
 (setq whitespace-action '(auto-cleanup)) 
 ;; only show bad whitespace
@@ -136,6 +139,38 @@
 ;;handlebars
 (require 'handlebars-mode)
 
+;;csharp-mode
+(autoload 'csharp-mode "csharp-mode" "Major mode for editing C# code." t)
+(setq auto-mode-alist
+      (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
+
+;;web-mode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-hook 'web-mode-hook 'zencoding-mode)
+
+;;ack
+(add-to-list 'load-path "~/.emacs.d/ack-el")
+(require 'ack)
+(autoload 'pcomplete/ack "pcmpl-ack")
+(autoload 'pcomplete/ack-grep "pcmpl-ack")
+
+;;project-root
+(require 'project-root)
+(setq project-roots
+      `(
+        ("ASP.NET Project"
+         :root-contains-files ("Web.config")
+         :filename-regex ,(regexify-ext-list '(html css js cs aspx ascs ashx resx))
+         )
+        ("Any project"
+         :root-contains-files (".project-root")
+         )
+        )
+      )
+
+
 ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
@@ -149,6 +184,8 @@
 (global-set-key (kbd "C-c ; C-w") 'rinari-web-server-restart)
 
 (global-set-key (kbd "C-c . g") 'project-grep)
+
+(global-set-key (kbd "C-c p a") 'project-root-ack)
 
 (global-set-key (kbd "C-z") 'undo)
 
@@ -191,9 +228,9 @@
 ;;;;;;;;;;;;;;;;; EMACS BACKUPS  ;;;;;;;;;;;;;;;;;
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-  backup-by-copying t    ; Don't delink hardlinks
-  version-control t      ; Use version numbers on backups
-  delete-old-versions t  ; Automatically delete excess backups
-  kept-new-versions 20   ; how many of the newest versions to keep
-  kept-old-versions 5    ; and how many of the old
-  )
+      backup-by-copying t    ; Don't delink hardlinks
+      version-control t      ; Use version numbers on backups
+      delete-old-versions t  ; Automatically delete excess backups
+      kept-new-versions 20   ; how many of the newest versions to keep
+      kept-old-versions 5    ; and how many of the old
+      )
