@@ -1,14 +1,13 @@
-(server-start)
-
 (setq load-path
       (append (list nil "$HOME/.emacs.d")
 	      load-path))
 
 (global-font-lock-mode 1)
 
-(setq js-indent-level 2)
+(setq js-indent-level 4)
+(setq ruby-indent-level 4)
 
-(setq ruby-indent-level 2)
+
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
 
 (add-hook 'html-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
@@ -20,7 +19,8 @@
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.less" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.js.erb" . js-mode))
-
+(add-to-list 'auto-mode-alist '("\\.srml" . sgml-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . sgml-mode))
 
 (setq auto-mode-alist
       (append '(("\\.php$" . php-mode)
@@ -36,6 +36,10 @@
 (menu-bar-mode -1)
 
 (setq x-select-enable-clipboard t)
+
+(global-auto-revert-mode)
+
+
 
 (add-to-list 'load-path "~/.emacs.d/")
 (require 'auto-complete-config)
@@ -65,6 +69,10 @@
   "Default inherited face for ERB tag delimeters"
   :group 'rhtml-faces)
 
+
+(add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
+(defun my-goto-match-beginning ()
+  (when isearch-forward (goto-char isearch-other-end)))
 
 ;; Rinari
 (add-to-list 'load-path "~/.emacs.d/rinari")
@@ -145,10 +153,17 @@
       (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
 
 ;;web-mode
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-hook 'web-mode-hook 'zencoding-mode)
+;(require 'web-mode)
+;(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+;(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+;(defun web-mode-hook ()
+;  "Hooks for Web mode."
+;  (setq web-mode-markup-indent-offset 4)
+;  (setq web-mode-code-indent-offset 4)
+;  (setq web-mode-css-indent-offset 4)
+;  (setq web-mode-indent-style 4)
+;)
+;(add-hook 'web-mode-hook 'zencoding-mode)
 
 ;;ack
 (add-to-list 'load-path "~/.emacs.d/ack-el")
@@ -186,11 +201,19 @@
 (global-set-key (kbd "C-c . g") 'project-grep)
 
 (global-set-key (kbd "C-c p a") 'project-root-ack)
+(global-set-key (kbd "C-c p f") 'project-root-find-file)
+(global-set-key (kbd "C-c p l") 'project-root-browse-seen-projects)
 
+(global-unset-key (kbd "C-z"))
 (global-set-key (kbd "C-z") 'undo)
 
 (define-key zencoding-mode-keymap (kbd "C-j") nil)
 (define-key zencoding-mode-keymap (kbd "M-j") 'zencoding-expand-line)
+
+(global-set-key (kbd "C-a") 'back-to-indentation)
+(global-set-key (kbd "M-m") 'move-beginning-of-line)
+
+(global-unset-key (kbd "C-t"))
 
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
