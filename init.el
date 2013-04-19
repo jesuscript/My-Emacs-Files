@@ -6,7 +6,7 @@
 
 (setq js-indent-level 4)
 (setq ruby-indent-level 4)
-
+(setq sgml-basic-offset 4)
 
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
 
@@ -74,12 +74,36 @@
 (defun my-goto-match-beginning ()
   (when isearch-forward (goto-char isearch-other-end)))
 
+
+;; el-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(el-get 'sync)
+
+
+;; Wanderlust
+(add-to-list 'load-path "~/.emacs.d/emacs-w3m")
+(require 'w3m)
+(setq mm-text-html-renderer 'w3m)
+;(require 'mime-w3m)
+(add-to-list 'load-path "~/.emacs.d/el-get/wanderlust/wl")
+(add-to-list 'load-path "~/.emacs.d/el-get/wanderlust/elmo")
+
+(autoload 'wl "wl" "Wanderlust" t)
+
 ;; Rinari
 (add-to-list 'load-path "~/.emacs.d/rinari")
 (require 'rinari)
 
 
-;;; rhtml-mode
+;; rhtml-mode
 (add-to-list 'load-path "~/.emacs.d/rhtml")
 (require 'rhtml-mode)
 (add-hook 'rhtml-mode-hook
@@ -196,6 +220,11 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-x\C-o" 'goto-line)
 
+(define-key minibuffer-local-map "\C-x\C-k" 'kill-region)
+(define-key minibuffer-local-map "\C-x\C-o" 'goto-line)
+
+(define-key isearch-mode-map [(control h)] 'isearch-delete-char)
+
 (global-set-key (kbd "C-c ; C-w") 'rinari-web-server-restart)
 
 (global-set-key (kbd "C-c . g") 'project-grep)
@@ -220,19 +249,27 @@
 
 (fset 'erb-echo-tag
       "<%= %>\C-b\C-b\C-b ")
-(global-set-key (kbd "C-c i") 'erb-echo-tag)
+(global-set-key (kbd "C-c r i") 'erb-echo-tag)
 
 (fset 'erb-tag
       "<% %>\C-b\C-b\C-b ")
-(global-set-key (kbd "C-c u") 'erb-tag)
+(global-set-key (kbd "C-c r u") 'erb-tag)
 
 (fset 'js-log
-      "console.log()\C-b")
-(global-set-key (kbd "C-c c") 'js-log)
+      "console.log();\C-b\C-b")
+(global-set-key (kbd "C-c j c") 'js-log)
+
+(fset 'js-debugger
+      "debugger;")
+(global-set-key (kbd "C-c j d") 'js-debugger)
+
+(fset 'ack-js-regex
+      "-G \.js$ ")
+(define-key minibuffer-local-map (kbd "C-c j") 'ack-js-regex)
 
 (fset 'erb-end-tag
       "<% end %>")
-(global-set-key (kbd "C-c e") 'erb-end-tag)
+(global-set-key (kbd "C-c r e") 'erb-end-tag)
 
 (fset 'indent-all-file
       "\C-[<\C-@\C-[>\C-[\C-\\\C-u\C-@\C-u\C-@")
@@ -257,3 +294,6 @@
       kept-new-versions 20   ; how many of the newest versions to keep
       kept-old-versions 5    ; and how many of the old
       )
+
+
+
