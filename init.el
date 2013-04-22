@@ -82,10 +82,16 @@
   (with-current-buffer
       (url-retrieve-synchronously
        "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
+    (let (el-get-master-branch)
+      (goto-char (point-max))
+      (eval-print-last-sexp))))
 
-(el-get 'sync)
+(setq my-packages (append '(el-get wanderlust apel flim)
+    (mapcar 'el-get-source-name el-get-sources)))
+
+(el-get-cleanup my-packages)                                                                                                                                    
+(el-get 'sync my-packages)
+
 
 
 ;; Wanderlust
@@ -93,9 +99,6 @@
 (require 'w3m)
 (setq mm-text-html-renderer 'w3m)
 ;(require 'mime-w3m)
-(add-to-list 'load-path "~/.emacs.d/el-get/wanderlust/wl")
-(add-to-list 'load-path "~/.emacs.d/el-get/wanderlust/elmo")
-
 (autoload 'wl "wl" "Wanderlust" t)
 
 ;; Rinari
