@@ -46,7 +46,7 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 
-                                        ;(define-key ac-complete-mode-map "\t" 'ac-complete)
+;(define-key ac-complete-mode-map "\t" 'ac-complete)
 (define-key ac-complete-mode-map "\r" nil)
 
 (defun select-next-window ()
@@ -265,6 +265,19 @@
 (fset 'js-debugger
       "debugger;")
 (global-set-key (kbd "C-c j d") 'js-debugger)
+
+
+(fset 'js-func-comma
+   "function(){\C-j\C-j\C-e,\C-p\C-i\C-p\C-e\C-b\C-b")
+(global-set-key (kbd "C-c j f") 'js-func-comma)
+
+(fset 'js-func
+   "function(){\C-j\C-j\C-p\C-i\C-p\C-e\C-b\C-b")
+(global-set-key (kbd "C-c j r") 'js-func)
+
+(fset 'js-func-semicolon
+   "function(){\C-j\C-j\C-e;\C-p\C-i\C-p\C-e\C-b\C-b")
+(global-set-key (kbd "C-c j v") 'js-func-semicolon)
 
 (fset 'ack-js-regex
       "-G \.js$ ")
