@@ -1,6 +1,8 @@
 (setq load-path
       (append (list nil "$HOME/.emacs.d")
 	      load-path))
+(add-to-list 'load-path "~/.emacs.d")
+
 
 (global-font-lock-mode 1)
 
@@ -41,13 +43,6 @@
 
 
 
-(add-to-list 'load-path "~/.emacs.d/")
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
-(ac-config-default)
-
-;(define-key ac-complete-mode-map "\t" 'ac-complete)
-(define-key ac-complete-mode-map "\r" nil)
 
 (defun select-next-window ()
   "Switch to the next window" 
@@ -86,11 +81,20 @@
       (goto-char (point-max))
       (eval-print-last-sexp))))
 
-(setq my-packages (append '(el-get wanderlust apel flim)
+(setq my-packages (append '(el-get wanderlust apel flim auto-complete)
     (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get-cleanup my-packages)                                                                                                                                    
 (el-get 'sync my-packages)
+
+
+;; Auto-complete
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
+(ac-config-default)
+
+;(define-key ac-complete-mode-map "\t" 'ac-complete)
+(define-key ac-complete-mode-map "\r" nil)
 
 
 
@@ -271,11 +275,12 @@
 (fset 'js-log
       "console.log();\C-b\C-b")
 (global-set-key (kbd "C-c j c") 'js-log)
+(global-set-key (kbd "C-c C-j c") 'js-log)
 
 (fset 'js-debugger
       "debugger;")
 (global-set-key (kbd "C-c j d") 'js-debugger)
-
+(global-set-key (kbd "C-c C-j d") 'js-debugger)
 
 (fset 'js-func-comma
    "function(){\C-j\C-j\C-e,\C-p\C-i\C-p\C-e\C-b\C-b")
@@ -324,7 +329,4 @@
       kept-new-versions 20   ; how many of the newest versions to keep
       kept-old-versions 5    ; and how many of the old
       )
-
-
-
 
