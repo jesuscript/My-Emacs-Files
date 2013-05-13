@@ -202,14 +202,18 @@
 (require 'project-root)
 (setq project-roots
       `(
-        ("ASP.NET Project"
+        ("ASP.NET project"
          :root-contains-files ("Web.config")
          :filename-regex ,(regexify-ext-list '(html css js cs aspx ascs ashx resx))
          )
         ("Any project"
          :root-contains-files (".project-root")
          )
+        ("Emacs project"
+         :root-contains-files ("init.el")
+         )
         )
+      
       )
 
 
@@ -247,6 +251,12 @@
 
 (global-unset-key (kbd "C-t"))
 
+(add-hook 'js-mode-hook  ;unsetting C-c C-j locally for js-mode because global unset doesn't work
+          '(lambda ()
+             (local-unset-key (kbd "C-c C-j"))
+             )
+          )
+
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -269,18 +279,22 @@
 
 (fset 'js-func-comma
    "function(){\C-j\C-j\C-e,\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j f") 'js-func-comma)
+(global-set-key (kbd "C-c j f c") 'js-func-comma)
+(global-set-key (kbd "C-c C-j f c") 'js-func-comma)
+
 
 (fset 'js-func
    "function(){\C-j\C-j\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j r") 'js-func)
+(global-set-key (kbd "C-c j f f") 'js-func)
+(global-set-key (kbd "C-c C-j f f") 'js-func)
 
 (fset 'js-func-semicolon
    "function(){\C-j\C-j\C-e;\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j v") 'js-func-semicolon)
+(global-set-key (kbd "C-c j f s") 'js-func-semicolon)
+(global-set-key (kbd "C-c C-j f s") 'js-func-semicolon)
 
 (fset 'ack-js-regex
-      "-G \.js$ ")
+      "--type=js ")
 (define-key minibuffer-local-map (kbd "C-c j") 'ack-js-regex)
 
 (fset 'erb-end-tag
@@ -310,6 +324,7 @@
       kept-new-versions 20   ; how many of the newest versions to keep
       kept-old-versions 5    ; and how many of the old
       )
+
 
 
 
