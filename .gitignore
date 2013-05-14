@@ -3,4 +3,5 @@ ac-comphist.dat
 auto-save-list/
 el-get/*
 indentation-config.el
+.project-roots
 

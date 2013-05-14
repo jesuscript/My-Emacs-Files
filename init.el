@@ -1,6 +1,8 @@
 (setq load-path
       (append (list nil "$HOME/.emacs.d")
 	      load-path))
+(add-to-list 'load-path "~/.emacs.d")
+
 
 (global-font-lock-mode 1)
 
@@ -37,13 +39,6 @@
 
 
 
-(add-to-list 'load-path "~/.emacs.d/")
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
-(ac-config-default)
-
-;(define-key ac-complete-mode-map "\t" 'ac-complete)
-(define-key ac-complete-mode-map "\r" nil)
 
 (defun select-next-window ()
   "Switch to the next window" 
@@ -87,11 +82,20 @@
       (goto-char (point-max))
       (eval-print-last-sexp))))
 
-(setq my-packages (append '(el-get wanderlust apel flim)
+(setq my-packages (append '(el-get wanderlust apel flim auto-complete)
     (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get-cleanup my-packages)                                                                                                                                    
 (el-get 'sync my-packages)
+
+
+;; Auto-complete
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
+(ac-config-default)
+
+;(define-key ac-complete-mode-map "\t" 'ac-complete)
+(define-key ac-complete-mode-map "\r" nil)
 
 
 
@@ -203,18 +207,25 @@
 (require 'project-root)
 (setq project-roots
       `(
-        ("ASP.NET Project"
+        ("ASP.NET project"
          :root-contains-files ("Web.config")
          :filename-regex ,(regexify-ext-list '(html css js cs aspx ascs ashx resx))
          )
         ("Any project"
          :root-contains-files (".project-root")
          )
+<<<<<<< HEAD
         ("Meteor Project"
          :root-contains-files (".meteor")
          )
         
+=======
+        ("Emacs project"
+         :root-contains-files ("init.el")
+         )
+>>>>>>> d0580462bff300ea7e996b1c1127aa6371c9a67f
         )
+      
       )
 
 
@@ -252,6 +263,12 @@
 
 (global-unset-key (kbd "C-t"))
 
+(add-hook 'js-mode-hook  ;unsetting C-c C-j locally for js-mode because global unset doesn't work
+          '(lambda ()
+             (local-unset-key (kbd "C-c C-j"))
+             )
+          )
+
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -266,23 +283,24 @@
 (fset 'js-log
       "console.log();\C-b\C-b")
 (global-set-key (kbd "C-c j c") 'js-log)
+(global-set-key (kbd "C-c C-j c") 'js-log)
 
 (fset 'js-debugger
       "debugger;")
 (global-set-key (kbd "C-c j d") 'js-debugger)
+(global-set-key (kbd "C-c C-j d") 'js-debugger)
 
-
-(fset 'js-func-comma
-   "function(){\C-j\C-j\C-e,\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j f") 'js-func-comma)
 
 (fset 'js-func
-   "function(){\C-j\C-j\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j r") 'js-func)
+   "\C-bfunction(){\C-j\C-j\C-p\C-i\C-p\C-e\C-b\C-b")
+(global-set-key (kbd "C-c j f") 'js-func)
+(global-set-key (kbd "C-c C-j f") 'js-func)
 
-(fset 'js-func-semicolon
-   "function(){\C-j\C-j\C-e;\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j v") 'js-func-semicolon)
+(fset 'js-object-literal
+   "\C-b{\C-j\C-j\C-p\C-i")
+(global-set-key (kbd "C-c j o") 'js-object-literal)
+(global-set-key (kbd "C-c C-j o") 'js-object-literal)
+
 
 (fset 'ack-js-regex
       "--type=js ")
@@ -315,6 +333,4 @@
       kept-new-versions 20   ; how many of the newest versions to keep
       kept-old-versions 5    ; and how many of the old
       )
-
-
 
