@@ -282,21 +282,17 @@
 (global-set-key (kbd "C-c j d") 'js-debugger)
 (global-set-key (kbd "C-c C-j d") 'js-debugger)
 
-(fset 'js-func-comma
-   "function(){\C-j\C-j\C-e,\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j f c") 'js-func-comma)
-(global-set-key (kbd "C-c C-j f c") 'js-func-comma)
-
 
 (fset 'js-func
-   "function(){\C-j\C-j\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j f f") 'js-func)
-(global-set-key (kbd "C-c C-j f f") 'js-func)
+   "\C-bfunction(){\C-j\C-j\C-p\C-i\C-p\C-e\C-b\C-b")
+(global-set-key (kbd "C-c j f") 'js-func)
+(global-set-key (kbd "C-c C-j f") 'js-func)
 
-(fset 'js-func-semicolon
-   "function(){\C-j\C-j\C-e;\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j f s") 'js-func-semicolon)
-(global-set-key (kbd "C-c C-j f s") 'js-func-semicolon)
+(fset 'js-object-literal
+   "\C-b{\C-j\C-j\C-p\C-i")
+(global-set-key (kbd "C-c j o") 'js-object-literal)
+(global-set-key (kbd "C-c C-j o") 'js-object-literal)
+
 
 (fset 'ack-js-regex
       "--type=js ")
