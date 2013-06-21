@@ -6,9 +6,6 @@
 
 (global-font-lock-mode 1)
 
-(setq js-indent-level 4)
-(setq ruby-indent-level 4)
-(setq sgml-basic-offset 4)
 
 (add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
 
@@ -32,7 +29,6 @@
 
 (setq-default indent-tabs-mode nil)
 
-(setq c-basic-offset 4)
 
 (setq tramp-default-method "ssh")
 
@@ -69,6 +65,11 @@
 (add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
 (defun my-goto-match-beginning ()
   (when isearch-forward (goto-char isearch-other-end)))
+
+
+
+;; indentation config
+(require 'indentation-config)
 
 
 ;; el-get
@@ -214,9 +215,16 @@
         ("Any project"
          :root-contains-files (".project-root")
          )
+<<<<<<< HEAD
+        ("Meteor Project"
+         :root-contains-files (".meteor")
+         )
+        
+=======
         ("Emacs project"
          :root-contains-files ("init.el")
          )
+>>>>>>> d0580462bff300ea7e996b1c1127aa6371c9a67f
         )
       )
 
