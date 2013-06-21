@@ -1,6 +1,6 @@
 (setq load-path
       (append (list nil "$HOME/.emacs.d")
-	      load-path))
+              load-path))
 (add-to-list 'load-path "~/.emacs.d")
 
 
@@ -23,10 +23,11 @@
 (add-to-list 'auto-mode-alist '("\\.js.erb" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.srml" . sgml-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . sgml-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 
 (setq auto-mode-alist
       (append '(("\\.php$" . php-mode)
-		("\\.module$" . php-mode))
+                ("\\.module$" . php-mode))
               auto-mode-alist))
 
 (setq-default indent-tabs-mode nil)
@@ -81,10 +82,10 @@
       (goto-char (point-max))
       (eval-print-last-sexp))))
 
-(setq my-packages (append '(el-get wanderlust apel flim auto-complete)
-    (mapcar 'el-get-source-name el-get-sources)))
+(setq my-packages (append '(el-get wanderlust apel flim auto-complete js2-mode)
+                          (mapcar 'el-get-source-name el-get-sources)))
 
-(el-get-cleanup my-packages)                                                                                                                                    
+(el-get-cleanup my-packages)
 (el-get 'sync my-packages)
 
 
@@ -93,7 +94,7 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 
-;(define-key ac-complete-mode-map "\t" 'ac-complete)
+                                        ;(define-key ac-complete-mode-map "\t" 'ac-complete)
 (define-key ac-complete-mode-map "\r" nil)
 
 
@@ -102,7 +103,7 @@
 (add-to-list 'load-path "~/.emacs.d/emacs-w3m")
 (require 'w3m)
 (setq mm-text-html-renderer 'w3m)
-;(require 'mime-w3m)
+                                        ;(require 'mime-w3m)
 (autoload 'wl "wl" "Wanderlust" t)
 
 ;; Rinari
@@ -184,17 +185,17 @@
       (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
 
 ;;web-mode
-;(require 'web-mode)
-;(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-;(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-;(defun web-mode-hook ()
-;  "Hooks for Web mode."
-;  (setq web-mode-markup-indent-offset 4)
-;  (setq web-mode-code-indent-offset 4)
-;  (setq web-mode-css-indent-offset 4)
-;  (setq web-mode-indent-style 4)
-;)
-;(add-hook 'web-mode-hook 'zencoding-mode)
+                                        ;(require 'web-mode)
+                                        ;(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+                                        ;(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+                                        ;(defun web-mode-hook ()
+                                        ;  "Hooks for Web mode."
+                                        ;  (setq web-mode-markup-indent-offset 4)
+                                        ;  (setq web-mode-code-indent-offset 4)
+                                        ;  (setq web-mode-css-indent-offset 4)
+                                        ;  (setq web-mode-indent-style 4)
+                                        ;)
+                                        ;(add-hook 'web-mode-hook 'zencoding-mode)
 
 ;;ack
 (add-to-list 'load-path "~/.emacs.d/ack-el")
@@ -217,11 +218,28 @@
          :root-contains-files ("init.el")
          )
         )
-      
       )
 
 
-;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
+;;imenu
+;; (setq js-imenu-generic-expression
+;;       '(("Method"   "^\s*\\([a-z0-9_]\\)*:\s*function\s*(.*)\s*{" 1)
+;;         ("function" "\\(function\\)" 1)
+;;         )
+;;       )
+
+;;  (add-hook 'js2-mode-hook
+;;            (lambda ()
+;;              (setq imenu-generic-expression js-imenu-generic-expression)
+;;              )
+;;            )
+
+;; (add-hook 'js2-mode-hook
+;;           (lambda()
+;;             (setq imenu-generic-expression js-imenu-generic-expression)
+;;             ))
+
+ ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
 
@@ -255,11 +273,6 @@
 
 (global-unset-key (kbd "C-t"))
 
-(add-hook 'js-mode-hook  ;unsetting C-c C-j locally for js-mode because global unset doesn't work
-          '(lambda ()
-             (local-unset-key (kbd "C-c C-j"))
-             )
-          )
 
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
@@ -284,12 +297,12 @@
 
 
 (fset 'js-func
-   "\C-bfunction(){\C-j\C-j\C-p\C-i\C-p\C-e\C-b\C-b")
+      "\C-bfunction(){\C-j\C-j\C-p\C-i\C-p\C-e\C-b\C-b")
 (global-set-key (kbd "C-c j f") 'js-func)
 (global-set-key (kbd "C-c C-j f") 'js-func)
 
 (fset 'js-object-literal
-   "\C-b{\C-j\C-j\C-p\C-i")
+      "\C-b{\C-j\C-j\C-p\C-i")
 (global-set-key (kbd "C-c j o") 'js-object-literal)
 (global-set-key (kbd "C-c C-j o") 'js-object-literal)
 
@@ -302,9 +315,16 @@
       "<% end %>")
 (global-set-key (kbd "C-c r e") 'erb-end-tag)
 
-(fset 'indent-all-file
-      "\C-[<\C-@\C-[>\C-[\C-\\\C-u\C-@\C-u\C-@")
-(global-set-key (kbd "C-c [") 'indent-all-file)
+
+(defun untabify-and-indent-buffer ()
+  (interactive)
+  (progn
+    (untabify (point-min) (point-max))
+    (indent-region (point-min) (point-max))
+    )
+  )
+
+(global-set-key (kbd "C-c [") 'untabify-and-indent-buffer)
 
 
 
