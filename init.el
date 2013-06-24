@@ -1,3 +1,13 @@
+;;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
+(setq my-el-get-packages '(el-get wanderlust apel flim auto-complete js2-mode dash s multiple-cursors
+                                  js2-refactor emacs-http-server))
+
+(setq my-package-packages '(skewer-mode ac-js2))
+
+
+
+
+
 (setq load-path
       (append (list nil "$HOME/.emacs.d")
               load-path))
@@ -83,12 +93,38 @@
       (goto-char (point-max))
       (eval-print-last-sexp))))
 
-(setq my-packages (append '(el-get wanderlust apel flim auto-complete js2-mode)
+
+(push '(:name yasnippet
+              :website "https://github.com/capitaomorte/yasnippet.git"
+              :description "YASnippet is a template system for Emacs."
+              :type github
+              :pkgname "capitaomorte/yasnippet"
+              :features "yasnippet"
+              :compile "yasnippet.el")
+      el-get-sources)
+
+(setq my-packages (append my-el-get-packages
                           (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
 
+
+;;package.el
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
+(package-initialize)
+
+; fetch the list of packages available 
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+; install the missing packages
+(dolist (package my-package-packages)
+  (when (not (package-installed-p package))
+    (package-install package)))
 
 ;; Auto-complete
 (require 'auto-complete-config)
@@ -185,18 +221,6 @@
 (setq auto-mode-alist
       (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
 
-;;web-mode
-                                        ;(require 'web-mode)
-                                        ;(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-                                        ;(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-                                        ;(defun web-mode-hook ()
-                                        ;  "Hooks for Web mode."
-                                        ;  (setq web-mode-markup-indent-offset 4)
-                                        ;  (setq web-mode-code-indent-offset 4)
-                                        ;  (setq web-mode-css-indent-offset 4)
-                                        ;  (setq web-mode-indent-style 4)
-                                        ;)
-                                        ;(add-hook 'web-mode-hook 'zencoding-mode)
 
 ;;ack
 (add-to-list 'load-path "~/.emacs.d/ack-el")
@@ -215,19 +239,17 @@
         ("Any project"
          :root-contains-files (".project-root")
          )
-<<<<<<< HEAD
         ("Meteor Project"
          :root-contains-files (".meteor")
          )
-        
-=======
         ("Emacs project"
          :root-contains-files ("init.el")
          )
->>>>>>> d0580462bff300ea7e996b1c1127aa6371c9a67f
         )
       )
 
+;;skewer-mode
+(skewer-setup)
 
 ;;imenu
 ;; (setq js-imenu-generic-expression
@@ -281,7 +303,8 @@
 
 (global-unset-key (kbd "C-t"))
 
-
+(js2r-add-keybindings-with-prefix "C-c C-j r")
+(js2r-add-keybindings-with-prefix "C-c j r")
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -333,8 +356,6 @@
   )
 
 (global-set-key (kbd "C-c [") 'untabify-and-indent-buffer)
-
-
 
 ;;;;;;;;;;;;;;;;;;;;; FACES  ;;;;;;;;;;;;;;;;;;;;;
 
