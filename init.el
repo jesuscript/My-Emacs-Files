@@ -214,20 +214,18 @@
         ("Any project"
          :root-contains-files (".project-root")
          )
-<<<<<<< HEAD
         ("Meteor Project"
          :root-contains-files (".meteor")
          )
-        
-=======
         ("Emacs project"
          :root-contains-files ("init.el")
          )
->>>>>>> d0580462bff300ea7e996b1c1127aa6371c9a67f
         )
-      
       )
 
+
+;; handlebars indentation for html/sgml
+(require 'handlebars-sgml-hacks)
 
 ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "M-]") 'select-next-window)
