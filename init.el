@@ -258,6 +258,10 @@
 ;;         )
 ;;       )
 
+
+;; handlebars indentation for html/sgml
+(require 'handlebars-sgml-hacks)
+
 ;;  (add-hook 'js2-mode-hook
 ;;            (lambda ()
 ;;              (setq imenu-generic-expression js-imenu-generic-expression)
@@ -270,6 +274,7 @@
 ;;             ))
 
  ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
+
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
 
