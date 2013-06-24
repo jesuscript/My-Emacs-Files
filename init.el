@@ -2,7 +2,7 @@
 (setq my-el-get-packages '(el-get wanderlust apel flim auto-complete js2-mode dash s multiple-cursors
                                   js2-refactor emacs-http-server))
 
-(setq my-package-packages '(skewer-mode ac-js2))
+(setq my-package-packages '(skewer-mode))
 
 
 
