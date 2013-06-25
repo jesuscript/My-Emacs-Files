@@ -251,27 +251,36 @@
 ;;skewer-mode
 (skewer-setup)
 
-;;imenu
-;; (setq js-imenu-generic-expression
-;;       '(("Method"   "^\s*\\([a-z0-9_]\\)*:\s*function\s*(.*)\s*{" 1)
-;;         ("function" "\\(function\\)" 1)
-;;         )
-;;       )
-
+;;js2-mode
+(add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
 
 ;; handlebars indentation for html/sgml
 (require 'handlebars-sgml-hacks)
 
-;;  (add-hook 'js2-mode-hook
-;;            (lambda ()
-;;              (setq imenu-generic-expression js-imenu-generic-expression)
-;;              )
-;;            )
+;; yasnippets
+(defun yas-ido-expand ()
+  "Lets you select (and expand) a yasnippet key"
+  (interactive)
+    (let ((original-point (point)))
+      (while (and
+              (not (= (point) (point-min) ))
+              (not
+               (string-match "[[:space:]\n]" (char-to-string (char-before)))))
+        (backward-word 1))
+    (let* ((init-word (point))
+           (word (buffer-substring init-word original-point))
+           (list (yas-active-keys)))
+      (goto-char original-point)
+      (let ((key (remove-if-not
+                  (lambda (s) (string-match (concat "^" word) s)) list)))
+        (if (= (length key) 1)
+            (setq key (pop key))
+          (setq key (ido-completing-read "key: " list nil nil word)))
+        (delete-char (- init-word original-point))
+        (insert key)
+        (yas-expand)))))
 
-;; (add-hook 'js2-mode-hook
-;;           (lambda()
-;;             (setq imenu-generic-expression js-imenu-generic-expression)
-;;             ))
+(define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-ido-expand)
 
  ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
 
@@ -310,6 +319,9 @@
 
 (js2r-add-keybindings-with-prefix "C-c C-j r")
 (js2r-add-keybindings-with-prefix "C-c j r")
+
+(define-key js2-mode-map (kbd "C-c C-j e") 'js2-display-error-list)
+(define-key js2-mode-map (kbd "C-c j e") 'js2-display-error-list)
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
 
