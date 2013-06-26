@@ -1,5 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
-(setq my-el-get-packages '(el-get wanderlust apel flim auto-complete js2-mode dash s multiple-cursors
+(setq my-el-get-packages '(el-get wanderlust apel flim js2-mode dash s multiple-cursors auto-complete
                                   js2-refactor emacs-http-server))
 
 (setq my-package-packages '(skewer-mode))
@@ -103,6 +103,7 @@
               :compile "yasnippet.el")
       el-get-sources)
 
+
 (setq my-packages (append my-el-get-packages
                           (mapcar 'el-get-source-name el-get-sources)))
 
@@ -117,22 +118,14 @@
 
 (package-initialize)
 
-; fetch the list of packages available 
+                                        ; fetch the list of packages available 
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-; install the missing packages
+                                        ; install the missing packages
 (dolist (package my-package-packages)
   (when (not (package-installed-p package))
     (package-install package)))
-
-;; Auto-complete
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
-(ac-config-default)
-
-                                        ;(define-key ac-complete-mode-map "\t" 'ac-complete)
-(define-key ac-complete-mode-map "\r" nil)
 
 
 
@@ -257,32 +250,50 @@
 ;; handlebars indentation for html/sgml
 (require 'handlebars-sgml-hacks)
 
+
 ;; yasnippets
+(yas-global-mode 1)
+
+(add-hook 'js2-mode-hook
+          '(lambda ()
+             (yas-minor-mode)))
+
+(setq yas-snippet-dirs '("~/.emacs.d/snippets/"))
+
+
 (defun yas-ido-expand ()
   "Lets you select (and expand) a yasnippet key"
-  (interactive)
+    (interactive)
     (let ((original-point (point)))
       (while (and
               (not (= (point) (point-min) ))
               (not
                (string-match "[[:space:]\n]" (char-to-string (char-before)))))
         (backward-word 1))
-    (let* ((init-word (point))
-           (word (buffer-substring init-word original-point))
-           (list (yas-active-keys)))
-      (goto-char original-point)
-      (let ((key (remove-if-not
-                  (lambda (s) (string-match (concat "^" word) s)) list)))
-        (if (= (length key) 1)
-            (setq key (pop key))
-          (setq key (ido-completing-read "key: " list nil nil word)))
-        (delete-char (- init-word original-point))
-        (insert key)
-        (yas-expand)))))
+      (let* ((init-word (point))
+             (word (buffer-substring init-word original-point))
+             (list (yas-active-keys)))
+        (goto-char original-point)
+        (let ((key (remove-if-not
+                    (lambda (s) (string-match (concat "^" word) s)) list)))
+          (if (= (length key) 1)
+              (setq key (pop key))
+            (setq key (ido-completing-read "key: " list nil nil word)))
+          (delete-char (- init-word original-point))
+          (insert key)
+          (yas-expand)))))
 
-(define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-ido-expand)
 
- ;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
+(define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
+
+;; Auto-complete
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
+(ac-config-default)
+(define-key ac-complete-mode-map "\r" nil)
+
+
+;;;;;;;;;;;;;;;;;;;; BINDINGS ;;;;;;;;;;;;;;;;;;;;
 
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
@@ -317,11 +328,10 @@
 
 (global-unset-key (kbd "C-t"))
 
-(js2r-add-keybindings-with-prefix "C-c C-j r")
-(js2r-add-keybindings-with-prefix "C-c j r")
+(js2r-add-keybindings-with-prefix "C-c C-j")
+(js2r-add-keybindings-with-prefix "C-c j")
 
-(define-key js2-mode-map (kbd "C-c C-j e") 'js2-display-error-list)
-(define-key js2-mode-map (kbd "C-c j e") 'js2-display-error-list)
+(define-key js2-mode-map (kbd "C-c e") 'js2-display-error-list)
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -332,28 +342,6 @@
 (fset 'erb-tag
       "<% %>\C-b\C-b\C-b ")
 (global-set-key (kbd "C-c r u") 'erb-tag)
-
-(fset 'js-log
-      "console.log();\C-b\C-b")
-(global-set-key (kbd "C-c j c") 'js-log)
-(global-set-key (kbd "C-c C-j c") 'js-log)
-
-(fset 'js-debugger
-      "debugger;")
-(global-set-key (kbd "C-c j d") 'js-debugger)
-(global-set-key (kbd "C-c C-j d") 'js-debugger)
-
-
-(fset 'js-func
-      "\C-bfunction(){\C-j\C-j\C-p\C-i\C-p\C-e\C-b\C-b")
-(global-set-key (kbd "C-c j f") 'js-func)
-(global-set-key (kbd "C-c C-j f") 'js-func)
-
-(fset 'js-object-literal
-      "\C-b{\C-j\C-j\C-p\C-i")
-(global-set-key (kbd "C-c j o") 'js-object-literal)
-(global-set-key (kbd "C-c C-j o") 'js-object-literal)
-
 
 (fset 'ack-js-regex
       "--type=js ")
