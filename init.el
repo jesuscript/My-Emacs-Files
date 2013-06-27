@@ -332,6 +332,7 @@
 (js2r-add-keybindings-with-prefix "C-c j")
 
 (define-key js2-mode-map (kbd "C-c e") 'js2-display-error-list)
+
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
 
