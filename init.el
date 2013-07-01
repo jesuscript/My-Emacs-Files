@@ -3,7 +3,7 @@
 (setq my-el-get-packages '(el-get wanderlust apel flim js2-mode dash s multiple-cursors auto-complete
                                   js2-refactor emacs-http-server))
 (setq my-package-packages '(skewer-mode))
-(setq load-path (append (list nil "$HOME/.emacs.d") load-path))
+(add-to-list 'load-path "~/.emacs.d")
 
 ;;;;;;;;;;;;;;;;;; GLOBAL SETTINGS ;;;;;;;;;;;;;;;
 
