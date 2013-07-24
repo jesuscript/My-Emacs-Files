@@ -26,7 +26,6 @@
 (el-get-cleanup my-packages)
 (el-get 'sync my-packages)
 
-
 ;;package.el
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -168,6 +167,10 @@
 
 ;; PHP Mode
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
+
+;; SCSS Mode add-on (hides compilation buffer)
+(require 'aj-compilation)
+
 
 
 

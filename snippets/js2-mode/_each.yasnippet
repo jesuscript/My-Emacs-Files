@@ -2,4 +2,4 @@
 # name: _each
 # key: _each
 # --
-_.each($1, function($2){ $0 },${3:this});
+_.each($1, function($2){ $0; }${3:, this});
