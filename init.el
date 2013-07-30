@@ -1,7 +1,7 @@
-;;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
 
-(setq my-el-get-packages '(el-get wanderlust apel flim js2-mode dash s multiple-cursors auto-complete
-                                  js2-refactor emacs-http-server scss-mode))
+(setq my-el-get-packages '(el-get wanderlust apel flim js2-mode dash s multiple-cursors
+                                  auto-complete js2-refactor emacs-http-server scss-mode))
 (setq my-package-packages '(skewer-mode))
 (add-to-list 'load-path "~/.emacs.d")
 
@@ -39,9 +39,11 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (require 'indentation-config)
 (require 'my-package-configs)
 (require 'my-handy-functions)
+(require 'indentation-config)
 (require 'my-keybindings)
 (require 'my-macros)
 (require 'my-local-macros nil :noerror)
