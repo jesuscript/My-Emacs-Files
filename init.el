@@ -44,5 +44,6 @@
 (require 'my-handy-functions)
 (require 'my-keybindings)
 (require 'my-macros)
+(require 'my-local-macros nil :noerror)
 (require 'my-faces)
 

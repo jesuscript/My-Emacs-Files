@@ -51,10 +51,6 @@
                                         ;(require 'mime-w3m)
 (autoload 'wl "wl" "Wanderlust" t)
 
-;; Rinari
-(add-to-list 'load-path "~/.emacs.d/rinari")
-(require 'rinari)
-
 
 ;; rhtml-mode
 (add-to-list 'load-path "~/.emacs.d/rhtml")
@@ -168,8 +164,10 @@
 ;; PHP Mode
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
 
-;; SCSS Mode add-on (hides compilation buffer)
-(require 'aj-compilation)
+
+;; SCSS Mode
+(add-hook 'scss-mode-hook 'flymake-mode)
+(require 'my-aj-compilation) ;add-on (hides compilation buffer); added hide-exceptions (e.g. "ack")
 
 
 
