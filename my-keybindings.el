@@ -38,8 +38,9 @@
 
 (define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
 
-
 (local-set-key (kbd "M-f") 'yas-next-field)
+
+(global-set-key (kbd "C-c C-c") 'ctags-create-or-update-tags-table)
 
 (defun my-yas-key-mapping-hook ()
   (local-set-key (kbd "M-f") 'yas-next-field)
