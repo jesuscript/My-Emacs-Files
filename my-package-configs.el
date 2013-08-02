@@ -169,7 +169,7 @@
 (add-hook 'scss-mode-hook 'flymake-mode)
 (require 'my-aj-compilation) ;add-on (hides compilation buffer); added hide-exceptions (e.g. "ack")
 
-
-
+;;tags
+(require 'ctags)
 
 (provide 'my-package-configs)
