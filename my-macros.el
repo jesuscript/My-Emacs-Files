@@ -1,6 +1,5 @@
 ;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
 
-
 (fset 'erb-echo-tag
       "<%= %>\C-b\C-b\C-b ")
 (global-set-key (kbd "C-c r i") 'erb-echo-tag)
