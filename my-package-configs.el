@@ -171,5 +171,6 @@
 
 ;;tags
 (require 'ctags)
+(setq tags-case-fold-search nil)
 
 (provide 'my-package-configs)
