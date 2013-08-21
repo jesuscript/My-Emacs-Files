@@ -160,6 +160,9 @@
 (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
 (ac-config-default)
 (define-key ac-complete-mode-map "\r" nil)
+(setq ac-auto-show-menu 0.1)
+(setq ac-quick-help-delay 0.3)
+
 
 ;; PHP Mode
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
@@ -167,6 +170,7 @@
 
 ;; SCSS Mode
 (add-hook 'scss-mode-hook 'flymake-mode)
+(add-hook 'scss-mode-hook 'auto-complete-mode) ; that's a weird one...
 (require 'my-aj-compilation) ;add-on (hides compilation buffer); added hide-exceptions (e.g. "ack")
 
 ;;tags

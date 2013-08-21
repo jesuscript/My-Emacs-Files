@@ -36,7 +36,7 @@
             (not (= (point) (point-min) ))
             (not
              (string-match "[[:space:]\n]" (char-to-string (char-before)))))
-      (if (string-match "[_${}]" (char-to-string (char-before)))
+      (if (string-match "[_${}\.]" (char-to-string (char-before)))
           (backward-char 1)
         (backward-word 1)))
     (let* ((init-word (point))

@@ -42,6 +42,10 @@
 
 (global-set-key (kbd "C-c C-c") 'ctags-create-or-update-tags-table)
 
+(global-set-key (kbd "C-x r") 'rename-file-and-buffer)
+
+(global-set-key (kbd "C-c r") 'replace-string)
+
 (defun my-yas-key-mapping-hook ()
   (local-set-key (kbd "M-f") 'yas-next-field)
   (local-set-key (kbd "M-b") 'yas-prev-field)

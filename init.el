@@ -29,6 +29,7 @@
 (add-to-list 'auto-mode-alist '("\\.js.erb" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.srml" . sgml-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . sgml-mode))
+(add-to-list 'auto-mode-alist '("\\.cshtml\\'" . sgml-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
 
