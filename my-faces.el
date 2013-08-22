@@ -15,4 +15,7 @@
 (set-face-foreground 'minibuffer-prompt "#ffffff")
 (set-face-foreground 'tool-bar "#ffffff")
 
+(setq ace-jump-mode-gray-background t)
+(set-face-foreground 'ace-jump-face-foreground "#fff")
+
 (provide 'my-faces)

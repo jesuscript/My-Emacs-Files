@@ -55,7 +55,17 @@
   (local-unset-key (kbd "M-f"))
   (local-unset-key (kbd "M-b")))
 
+;;yasnippet
 (add-hook 'yas-before-expand-snippet-hook 'my-yas-key-mapping-hook)
 (add-hook 'yas-after-exit-snippet-hook 'my-yas-key-unmapping-hook)
+
+;; ace-jump-mode
+(define-key global-map (kbd "C-c SPC") 'ace-jump-word-mode)
+(define-key global-map (kbd "C-c C-SPC") 'ace-jump-word-mode)
+(define-key global-map (kbd "C-c h SPC") 'ace-jump-char-mode)
+(define-key global-map (kbd "C-c l SPC") 'ace-jump-line-mode)
+(define-key global-map (kbd "C-c C-l SPC") 'ace-jump-line-mode)
+(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+
 
 (provide 'my-keybindings)

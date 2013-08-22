@@ -136,9 +136,6 @@
         )
       )
 
-;;skewer-mode
-(skewer-setup)
-
 ;;js2-mode
 (add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
 
@@ -167,14 +164,27 @@
 ;; PHP Mode
 (autoload 'php-mode "php-mode" "Major mode for editing php code." t)
 
+;; CSS Mode
+(add-hook 'css-mode-hook 'rainbow-mode)
 
 ;; SCSS Mode
 (add-hook 'scss-mode-hook 'flymake-mode)
 (add-hook 'scss-mode-hook 'auto-complete-mode) ; that's a weird one...
+(add-hook 'scss-mode-hook 'rainbow-mode)
 (require 'my-aj-compilation) ;add-on (hides compilation buffer); added hide-exceptions (e.g. "ack")
 
 ;;tags
 (require 'ctags)
 (setq tags-case-fold-search nil)
+
+;;rainbow-delimiter
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
+;;ace-jump-mode
+(eval-after-load "ace-jump-mode"
+  '(ace-jump-mode-enable-mark-sync))
+
+
+
 
 (provide 'my-package-configs)
