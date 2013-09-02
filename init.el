@@ -2,8 +2,9 @@
 
 (setq my-el-get-packages '(el-get wanderlust apel flim js2-mode dash s multiple-cursors
                                   auto-complete js2-refactor emacs-http-server scss-mode
-                                  ctags rainbow-delimiters rainbow-mode ace-jump-mode))
-(setq my-package-packages '())
+                                  ctags rainbow-delimiters rainbow-mode ace-jump-mode
+                                  ))
+(setq my-package-packages '(csharp-mode jss))
 (add-to-list 'load-path "~/.emacs.d")
 
 ;;;;;;;;;;;;;;;;;; GLOBAL SETTINGS ;;;;;;;;;;;;;;;

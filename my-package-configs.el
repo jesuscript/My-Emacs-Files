@@ -166,6 +166,7 @@
 
 ;; CSS Mode
 (add-hook 'css-mode-hook 'rainbow-mode)
+(add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 
 ;; SCSS Mode
 (add-hook 'scss-mode-hook 'flymake-mode)

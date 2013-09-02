@@ -52,5 +52,10 @@
         (insert key)
         (yas-expand)))))
 
+(defun remove-windows-new-line-chars ()
+  "Removes the annoying windows new line characters"
+  (interactive)
+  (replace-string "" "" nil (point-min) (point-max)))
+
 
 (provide 'my-handy-functions)
