@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
 
-(setq my-el-get-packages '(el-get wanderlust apel flim js2-mode dash s multiple-cursors
+(setq my-el-get-packages '(el-get js2-mode dash s multiple-cursors
                                   auto-complete js2-refactor emacs-http-server scss-mode
                                   ctags rainbow-delimiters rainbow-mode ace-jump-mode
                                   ))
