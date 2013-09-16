@@ -169,7 +169,7 @@
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 
 ;; SCSS Mode
-(add-hook 'scss-mode-hook 'flymake-mode)
+;(add-hook 'scss-mode-hook 'flymake-mode)
 (add-hook 'scss-mode-hook 'auto-complete-mode) ; that's a weird one...
 (add-hook 'scss-mode-hook 'rainbow-mode)
 (require 'my-aj-compilation) ;add-on (hides compilation buffer); added hide-exceptions (e.g. "ack")
