@@ -36,7 +36,7 @@
             (not (= (point) (point-min) ))
             (not
              (string-match "[[:space:]\n]" (char-to-string (char-before)))))
-      (if (string-match "[_$]" (char-to-string (char-before)))
+      (if (string-match "[_${}\.]" (char-to-string (char-before)))
           (backward-char 1)
         (backward-word 1)))
     (let* ((init-word (point))
@@ -51,6 +51,11 @@
         (delete-char (- init-word original-point))
         (insert key)
         (yas-expand)))))
+
+(defun remove-windows-new-line-chars ()
+  "Removes the annoying windows new line characters"
+  (interactive)
+  (replace-string "" "" nil (point-min) (point-max)))
 
 
 (provide 'my-handy-functions)

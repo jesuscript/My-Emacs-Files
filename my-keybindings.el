@@ -38,8 +38,13 @@
 
 (define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
 
-
 (local-set-key (kbd "M-f") 'yas-next-field)
+
+(global-set-key (kbd "C-c C-c") 'ctags-create-or-update-tags-table)
+
+(global-set-key (kbd "C-x r") 'rename-file-and-buffer)
+
+(global-set-key (kbd "C-c r") 'replace-string)
 
 (defun my-yas-key-mapping-hook ()
   (local-set-key (kbd "M-f") 'yas-next-field)
@@ -50,7 +55,18 @@
   (local-unset-key (kbd "M-f"))
   (local-unset-key (kbd "M-b")))
 
+;;yasnippet
 (add-hook 'yas-before-expand-snippet-hook 'my-yas-key-mapping-hook)
 (add-hook 'yas-after-exit-snippet-hook 'my-yas-key-unmapping-hook)
+
+;; ace-jump-mode
+(define-key global-map (kbd "C-c SPC") 'ace-jump-word-mode)
+(define-key global-map (kbd "C-c h SPC") 'ace-jump-char-mode)
+(define-key global-map (kbd "C-c l SPC") 'ace-jump-line-mode)
+(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+
+;; get rid of the fucking windows new line characters in the buffer ()
+(define-key global-map (kbd "C-c w r") 'remove-windows-new-line-chars)
+
 
 (provide 'my-keybindings)
