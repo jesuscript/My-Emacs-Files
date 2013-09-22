@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <13/05/22 23:08:04 /Users/megatv/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <13/09/09 19:22:32 /Users/megatv/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
@@ -156,4 +156,21 @@
   ("inline-decompress" "gzip -d")
   ("perl-file-spec" t)
   ("perl-cwd-realpath" t)
-  ("perl" "\\perl")))
+  ("perl" "\\perl"))
+ (["ssh" "Konstantin.Kudryavts" "cro-dsk-095.dotdigitalgroup.plc" nil nil]
+  ("uname" "CYGWIN_NT-6.1-WOW64 1.7.17(0.262/5/3)")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))
+  ("remote-shell" "/bin/bash")
+  ("busybox" nil)
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("file-exists" "test -e")
+  ("readlink" "\\readlink")
+  ("stat" "\\stat")
+  ("id" "/bin/id")
+  ("gid-integer" 10513)
+  ("ls" "/bin/ls --color=never")
+  ("uid-integer" 28730)))
