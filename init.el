@@ -4,7 +4,7 @@
                                   auto-complete js2-refactor emacs-http-server scss-mode
                                   ctags rainbow-delimiters rainbow-mode ace-jump-mode
                                   ))
-(setq my-package-packages '(csharp-mode jss))
+(setq my-package-packages '(csharp-mode))
 (add-to-list 'load-path "~/.emacs.d")
 
 ;;;;;;;;;;;;;;;;;; GLOBAL SETTINGS ;;;;;;;;;;;;;;;
