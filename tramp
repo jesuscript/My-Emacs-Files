@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <13/09/26 01:00:31 /home/Konstantin.Kudryavts/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <13/12/06 09:58:55 /home/Konstantin.Kudryavts/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
@@ -174,4 +174,15 @@
   ("id" "/bin/id")
   ("gid-integer" 10513)
   ("ls" "/bin/ls --color=never")
-  ("uid-integer" 28730)))
+  ("uid-integer" 28730))
+ (["sudo" "root" "localhost" nil nil]
+  ("uname" "CYGWIN_NT-6.2 1.7.25(0.270/5/3)")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/usr/sbin" "/usr/local/bin"))
+  ("remote-shell" "/bin/bash")
+  ("busybox" nil)
+  ("stat" "\\stat")
+  ("file-exists" "test -e")
+  ("id" "/bin/id")
+  ("gid-integer" 10513)))

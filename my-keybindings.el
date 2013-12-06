@@ -21,6 +21,7 @@
 (global-set-key (kbd "C-c p l") 'project-root-browse-seen-projects)
 
 (global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
 (global-set-key (kbd "C-z") 'undo)
 
 (define-key zencoding-mode-keymap (kbd "C-j") nil)
@@ -35,6 +36,7 @@
 (js2r-add-keybindings-with-prefix "C-c j")
 
 (define-key js2-mode-map (kbd "C-c e") 'js2-display-error-list)
+(define-key js2-mode-map (kbd "C-j") 'js2-line-break)
 
 (define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
 
@@ -68,5 +70,9 @@
 ;; get rid of the fucking windows new line characters in the buffer ()
 (define-key global-map (kbd "C-c w r") 'remove-windows-new-line-chars)
 
+;;etags
+(global-unset-key (kbd "M-."))
+(global-set-key (kbd "M-.") 'find-tag-other-window)
+(global-set-key (kbd "C-c M-.") 'find-tag)
 
 (provide 'my-keybindings)

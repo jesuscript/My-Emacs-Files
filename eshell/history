@@ -1,0 +1,53 @@
+cd }~
+cd ~
+apt-cyg install openssh
+ssh-host-config
+ssh-host-config
+net start sshd
+ssh-user-config
+ssh -v localhost
+ifconfig
+ipconfig
+cd }~
+cd ~/CODE
+ls
+git clone --bare git@github.com:kkudryavtsev/quokka.git quokka
+cd quokka/
+ls -a
+git push --mirror git@github.com:kkudryavtsev/quokka-disarmed.git
+cd ..
+ls
+rm -rf quokka/
+apt-cyg find pandoc
+apt-cyg install sass
+gem install sass
+sass -v
+apt-cyg install ctags
+cp ~/.emacs.d/.ctags ~/
+apt-cyg find bzr
+apt-cyg install bzr
+arc
+cp /cygdrive/c/Users/konstantin.kudryavts/Downloads/jquery-1.10.2.min.js /cygdrive/c/projects/dotmailer/dotMailerV4-InfiniteLoops/dotMailer.Web.WebApp.JSTests/Scripts/
+cd /cygdrive/c/projects/dotmailer/dotMailerV4-InfiniteLoops/dotMailer.Web.WebApp.JSTests/
+cd Scripts/
+ls
+mv jquery-1.10.2.min.js jquery/
+ls
+cd /cygdrive/c
+cp Users/konstantin.kudryavts/Downloads/angular-mocks.js projects/dotmailer/dotMailerV4-InfiniteLoops/dotMailer.Web.WebApp.JSTests/Scripts/
+cp /cygdrive/c/Users/konstantin.kudryavts/Downloads/sinon-1.7.3.js /cygdrive/c/projects/dotmailer/dotMailerV4-InfiniteLoops/dotMailer.Web.WebApp.JSTests/Scripts/
+cd /cygdrive/c/
+cd Program\ Files\ \(x86\)/
+ls
+rm -rf SearchProtect/
+sudo rm -rf SearchProtect/
+emacs
+cd ~
+ls
+ cd .emacs.d/
+git status
+git diff .mc-lists.el 
+rm .mc-lists.el 
+ls
+git status
+git diff tramp 
