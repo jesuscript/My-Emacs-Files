@@ -7,3 +7,4 @@ indentation-config.el
 my-local-macros.el
 url/
 tramp
+eshell

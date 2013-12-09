@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: beforeEach
+# key: beforeEach
+# --
+beforeEach(${1:inject}${1:$(cond ((string-match "module" yas-text) "") ((string-match "inject" yas-text) "(function") (t "function"))}($2)${1:$(if (string-match "module" yas-text) ");" "{" )}$0${1:$(cond ((string-match "module" yas-text) "") ((string-match "inject" yas-text) "}));") (t "});"))}

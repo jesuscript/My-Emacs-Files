@@ -2,8 +2,8 @@
 
 (setq my-el-get-packages '(el-get js2-mode dash s multiple-cursors
                                   auto-complete js2-refactor emacs-http-server scss-mode
-                                  ctags rainbow-delimiters rainbow-mode ace-jump-mode emacs-w3m
-                                  ))
+                                  ctags rainbow-delimiters rainbow-mode ace-jump-mode emacs-w3m))
+
 (setq my-package-packages '(csharp-mode))
 (add-to-list 'load-path "~/.emacs.d")
 
@@ -43,14 +43,22 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'indentation-config)
-(require 'my-package-configs)
-(require 'my-handy-functions)
-(require 'indentation-config)
-(require 'my-keybindings)
-(require 'my-macros)
-(require 'my-local-macros nil :noerror)
-(require 'my-faces)
+;; (require 'indentation-config nil :noerror)
+;; (require 'my-package-configs)
+;; (require 'my-handy-functions)
+;; (require 'my-keybindings)
+;; (require 'my-macros)
+;; (require 'my-local-macros nil :noerror)
+;; (require 'my-faces)
+
+(load "indentation-config" t)
+(load "my-package-configs")
+(load "my-handy-functions")
+(load "my-keybindings")
+(load "my-macros")
+(load "my-local-macros" t)
+(load "my-faces")
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -58,16 +66,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(coffee-tab-width 2))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-document-info ((t (:foreground "#cccccc"))))
- '(org-table ((t (:foreground "#cccccc"))))
- '(w3m-anchor ((t (:foreground "#cccccc"))))
- '(w3m-arrived-anchor ((t (:foreground "#ffffff"))))
- '(w3m-header-line-location-content ((t (:background "Gray90" :foreground "#000077"))))
- '(w3m-image-anchor ((t (:background "#550055"))))
- '(w3m-session-select ((t (:foreground "#999999"))))
- '(w3m-tab-unselected ((t (:background "blue" :foreground "#ffffff")))))
+

@@ -15,4 +15,15 @@
 
 (global-set-key (kbd "C-c [") 'untabify-and-indent-buffer)
 
-(provide 'my-macros)
+
+
+(defun open-line-and-indent ()
+  (interactive)
+  (progn
+    (newline-and-indent)
+    (previous-line)
+    (end-of-line)
+    (indent-according-to-mode)
+    ))
+
+(global-set-key (kbd "C-o") 'open-line-and-indent)
