@@ -6,4 +6,5 @@ indentation-config.el
 .project-roots
 my-local-macros.el
 url/
-
+tramp
+eshell

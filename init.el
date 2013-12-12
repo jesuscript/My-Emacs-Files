@@ -2,7 +2,8 @@
 
 (setq my-el-get-packages '(el-get js2-mode dash s multiple-cursors
                                   auto-complete js2-refactor emacs-http-server scss-mode
-                                  ctags rainbow-delimiters rainbow-mode ace-jump-mode))
+                                  ctags rainbow-delimiters rainbow-mode ace-jump-mode emacs-w3m))
+
 (setq my-package-packages '(csharp-mode))
 (add-to-list 'load-path "~/.emacs.d")
 
@@ -31,6 +32,7 @@
 (add-to-list 'auto-mode-alist '("\\.cshtml\\'" . sgml-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
+(add-to-list 'auto-mode-alist '("\\.ejs\\'" . sgml-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;; HOOKS ;;;;;;;;;;;;;;;;;;;;;
 
