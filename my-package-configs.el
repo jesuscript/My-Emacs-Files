@@ -151,6 +151,8 @@
              (yas-minor-mode)))
 
 (setq yas-snippet-dirs '("~/.emacs.d/snippets/"))
+(setq yas-prompt-functions '(yas-ido-prompt))
+
 
 ;; Auto-complete
 (require 'auto-complete-config)

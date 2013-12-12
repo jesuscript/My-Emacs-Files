@@ -52,6 +52,7 @@
         (insert key)
         (yas-expand)))))
 
+
 (defun remove-windows-new-line-chars ()
   "Removes the annoying windows new line characters"
   (interactive)
