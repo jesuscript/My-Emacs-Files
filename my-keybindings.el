@@ -39,7 +39,7 @@
 (define-key js2-mode-map (kbd "C-j") 'js2-line-break)
 
 (define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
-(define-key yas-minor-mode-ma (kbd "M-S") 'yas-insert-snippet)
+(define-key yas-minor-mode-map (kbd "M-S") 'yas-insert-snippet)
 
 (local-set-key (kbd "M-f") 'yas-next-field)
 
