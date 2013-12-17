@@ -1,3 +1,5 @@
+(define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer)
+
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
 
@@ -61,6 +63,7 @@
 ;;yasnippet
 (add-hook 'yas-before-expand-snippet-hook 'my-yas-key-mapping-hook)
 (add-hook 'yas-after-exit-snippet-hook 'my-yas-key-unmapping-hook)
+(define-key snippet-mode-map (kbd "C-c C-r") 'yas-reload-all)
 
 ;; ace-jump-mode
 (define-key global-map (kbd "C-c SPC") 'ace-jump-word-mode)
