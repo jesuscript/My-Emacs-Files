@@ -1,10 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
 
-(setq my-el-get-packages '(el-get js2-mode dash s multiple-cursors
+(setq my-el-get-packages '(el-get js2-mode dash s multiple-cursors org-pomodoro
                                   auto-complete js2-refactor emacs-http-server scss-mode
                                   ctags rainbow-delimiters rainbow-mode ace-jump-mode emacs-w3m))
 
-(setq my-package-packages '(csharp-mode))
+(setq my-package-packages '(csharp-mode magit yaml-mode csv-mode))
 (add-to-list 'load-path "~/.emacs.d")
 
 ;;;;;;;;;;;;;;;;;; GLOBAL SETTINGS ;;;;;;;;;;;;;;;
@@ -60,10 +60,5 @@
 (load "my-faces")
 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(coffee-tab-width 2))
-
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)

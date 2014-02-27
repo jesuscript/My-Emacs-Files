@@ -51,6 +51,8 @@
 
 (global-set-key (kbd "C-c r") 'replace-string)
 
+(global-set-key (kbd "C-c g") 'magit-status)
+
 (defun my-yas-key-mapping-hook ()
   (local-set-key (kbd "M-f") 'yas-next-field)
   (local-set-key (kbd "M-b") 'yas-prev-field)
@@ -67,6 +69,7 @@
 
 ;; ace-jump-mode
 (define-key global-map (kbd "C-c SPC") 'ace-jump-word-mode)
+(define-key global-map (kbd "C-c C-SPC") 'ace-jump-word-mode)
 (define-key global-map (kbd "C-c h SPC") 'ace-jump-char-mode)
 (define-key global-map (kbd "C-c l SPC") 'ace-jump-line-mode)
 (define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
@@ -79,4 +82,15 @@
 (global-set-key (kbd "M-.") 'find-tag-other-window)
 (global-set-key (kbd "C-c M-.") 'find-tag)
 
-(provide 'my-keybindings)
+;;org-mode
+(global-set-key (kbd "C-c o l") 'org-store-link)
+(global-set-key (kbd "C-c o c") 'org-capture)
+(global-set-key (kbd "C-c o a") 'org-agenda)
+(global-set-key (kbd "C-c o b") 'org-iswitchb)
+(global-set-key (kbd "C-c o p") 'org-pomodoro) ;;org-pomodoro
+(define-key org-mode-map (kbd "C-j") 'org-return)
+(define-key org-mode-map (kbd "M-j") 'org-insert-todo-heading)
+(define-key org-mode-map (kbd "M-p") 'org-pomodoro)
+(define-key org-mode-map (kbd "C-c u p") 'org-clock-update-time-maybe)
+
+

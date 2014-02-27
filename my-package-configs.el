@@ -119,12 +119,7 @@
 ;;project-root
 (require 'project-root)
 (setq project-roots
-      `(
-        ("ASP.NET project"
-         :root-contains-files ("Web.config")
-         :filename-regex ,(regexify-ext-list '(html css js cs aspx ascs ashx resx))
-         )
-        ("Any project"
+      `(("Any project"
          :root-contains-files (".project-root")
          )
         ("Meteor Project"
@@ -132,6 +127,9 @@
          )
         ("Emacs project"
          :root-contains-files ("init.el")
+         )
+        ("Node project"
+         :root-contains-files ("package.json")
          )
         )
       )
@@ -171,7 +169,7 @@
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
 
 ;; SCSS Mode
-;(add-hook 'scss-mode-hook 'flymake-mode)
+                                        ;(add-hook 'scss-mode-hook 'flymake-mode)
 (add-hook 'scss-mode-hook 'auto-complete-mode) ; that's a weird one...
 (add-hook 'scss-mode-hook 'rainbow-mode)
 (require 'my-aj-compilation) ;add-on (hides compilation buffer); added hide-exceptions (e.g. "ack")
@@ -187,7 +185,27 @@
 (eval-after-load "ace-jump-mode"
   '(ace-jump-mode-enable-mark-sync))
 
-
-
+;;python
+(when (executable-find "ipython")
+  (setq
+   python-shell-interpreter "ipython"
+   python-shell-interpreter-args ""
+   python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+   python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+   python-shell-completion-setup-code
+   "from IPython.core.completerlib import module_completion"
+   python-shell-completion-module-string-code
+   "';'.join(module_completion('''%s'''))\n"
+   python-shell-completion-string-code
+   "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
 
 (provide 'my-package-configs)
+
+;;erc
+(setq erc-track-enable-keybindings nil)
+
+;; org-mode
+(setq org-log-done t)
+(setq org-pomodoro-play-sounds nil)
+
+
