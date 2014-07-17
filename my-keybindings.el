@@ -43,7 +43,7 @@
 (define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
 (define-key yas-minor-mode-map (kbd "M-S") 'yas-insert-snippet)
 
-(local-set-key (kbd "M-f") 'yas-next-field)
+;(local-set-key (kbd "M-f") 'yas-next-field)
 
 (global-set-key (kbd "C-c C-c") 'ctags-create-or-update-tags-table)
 
@@ -93,4 +93,11 @@
 (define-key org-mode-map (kbd "M-p") 'org-pomodoro)
 (define-key org-mode-map (kbd "C-c u p") 'org-clock-update-time-maybe)
 
+;;macros
+(define-key global-map (kbd "C-c [") 'untabify-and-indent-buffer)
+(define-key c++-mode-map (kbd "C-c [") 'tabify-and-indent-buffer)
+(define-key c-mode-map (kbd "C-c [") 'tabify-and-indent-buffer)
 
+;;projectile-mode
+(setq projectile-keymap-prefix (kbd "C-c C-p"))
+(define-key projectile-mode-map (kbd "C-c p x") 'projectile-run-async-shell-command-in-root)

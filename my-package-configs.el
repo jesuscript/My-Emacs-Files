@@ -173,6 +173,7 @@
 (add-hook 'scss-mode-hook 'auto-complete-mode) ; that's a weird one...
 (add-hook 'scss-mode-hook 'rainbow-mode)
 (require 'my-aj-compilation) ;add-on (hides compilation buffer); added hide-exceptions (e.g. "ack")
+(setq scss-compile-at-save nil)
 
 ;;tags
 (require 'ctags)
@@ -199,13 +200,31 @@
    python-shell-completion-string-code
    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
 
-(provide 'my-package-configs)
-
 ;;erc
 (setq erc-track-enable-keybindings nil)
 
 ;; org-mode
 (setq org-log-done t)
 (setq org-pomodoro-play-sounds nil)
+
+(defun my-c++-mode-hook ()
+  (setq indent-tabs-mode t
+				c-basic-offset 2)
+  (auto-fill-mode)
+	(c-set-offset 'substatement-open 0))
+
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+(add-hook 'c-mode-hook 'my-c++-mode-hook)
+
+
+;;projectile
+(projectile-global-mode)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region (point-min) (point-max))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+
 
 

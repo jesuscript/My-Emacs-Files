@@ -1,17 +1,17 @@
 ;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
 
-(setq my-el-get-packages '(el-get js2-mode dash s multiple-cursors org-pomodoro
+(setq my-el-get-packages '(el-get js2-mode dash s multiple-cursors org-pomodoro go-mode
                                   auto-complete js2-refactor emacs-http-server scss-mode
                                   ctags rainbow-delimiters rainbow-mode ace-jump-mode emacs-w3m))
 
-(setq my-package-packages '(csharp-mode magit yaml-mode csv-mode))
+(setq my-package-packages '(csharp-mode magit yaml-mode csv-mode jade-mode floobits projectile
+                                        ack-and-a-half helm-projectile flx-ido restclient))
 (add-to-list 'load-path "~/.emacs.d")
 
 ;;;;;;;;;;;;;;;;;; GLOBAL SETTINGS ;;;;;;;;;;;;;;;
 
 (global-font-lock-mode 1)
 (menu-bar-mode -1)
-(setq-default indent-tabs-mode nil)
 (setq tramp-default-method "ssh")
 (global-auto-revert-mode)
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
@@ -33,6 +33,7 @@
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
 (add-to-list 'auto-mode-alist '("\\.ejs\\'" . sgml-mode))
+(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;; HOOKS ;;;;;;;;;;;;;;;;;;;;;
 
@@ -62,3 +63,7 @@
 
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+(ad-unadvise 'compilation-start)
+
+

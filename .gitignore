@@ -8,3 +8,4 @@ my-local-macros.el
 url/
 tramp
 eshell
+projectile*

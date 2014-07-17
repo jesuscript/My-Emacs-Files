@@ -13,7 +13,15 @@
     )
   )
 
-(global-set-key (kbd "C-c [") 'untabify-and-indent-buffer)
+(defun tabify-and-indent-buffer ()
+  (interactive)
+  (progn
+    (tabify (point-min) (point-max))
+    (indent-region (point-min) (point-max))
+    )
+  )
+
+
 
 
 
