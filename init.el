@@ -2,7 +2,8 @@
 
 (setq my-el-get-packages '(el-get js2-mode dash s multiple-cursors org-pomodoro go-mode
                                   auto-complete js2-refactor emacs-http-server scss-mode
-                                  ctags rainbow-delimiters rainbow-mode ace-jump-mode emacs-w3m))
+                                  ctags rainbow-delimiters rainbow-mode ace-jump-mode emacs-w3m
+                                  regex-tool))
 
 (setq my-package-packages '(csharp-mode magit yaml-mode csv-mode jade-mode floobits projectile
                                         ack-and-a-half helm-projectile flx-ido restclient))
