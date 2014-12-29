@@ -1,19 +1,46 @@
 ;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
 
-(setq my-el-get-packages '(el-get js2-mode dash s multiple-cursors org-pomodoro go-mode
-                                  auto-complete js2-refactor emacs-http-server scss-mode
-                                  ctags rainbow-delimiters rainbow-mode ace-jump-mode emacs-w3m
-                                  regex-tool))
+(setq my-el-get-packages '(el-get
+                           js2-mode
+                           dash
+                           s
+                           multiple-cursors
+                           org-pomodoro
+                           go-mode
+                           auto-complete
+                           js2-refactor emacs-http-server scss-mode
+                           ctags
+                           rainbow-delimiters
+                           rainbow-mode
+                           ace-jump-mode
+                           emacs-w3m
+                           regex-tool
+                           bash-completion))
 
-(setq my-package-packages '(csharp-mode magit yaml-mode csv-mode jade-mode floobits projectile
-                                        ack-and-a-half helm-projectile flx-ido restclient))
-(add-to-list 'load-path "~/.emacs.d")
+(setq my-package-packages '(csharp-mode
+                            magit
+                            yaml-mode
+                            csv-mode
+                            jade-mode
+                            floobits
+                            projectile
+                            ack-and-a-half
+                            helm-projectile
+                            flx-ido
+                            restclient
+                            feature-mode
+                            nginx-mode
+                            enh-ruby-mode
+                            org-trello))
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 ;;;;;;;;;;;;;;;;;; GLOBAL SETTINGS ;;;;;;;;;;;;;;;
 
 (global-font-lock-mode 1)
 (menu-bar-mode -1)
 (setq tramp-default-method "ssh")
+(setq tramp-auto-save-directory "/tmp")
 (global-auto-revert-mode)
 (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
       backup-by-copying t    ; Don't delink hardlinks
@@ -45,14 +72,6 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (require 'indentation-config nil :noerror)
-;; (require 'my-package-configs)
-;; (require 'my-handy-functions)
-;; (require 'my-keybindings)
-;; (require 'my-macros)
-;; (require 'my-local-macros nil :noerror)
-;; (require 'my-faces)
-
 (load "indentation-config" t)
 (load "my-package-configs")
 (load "my-handy-functions")
@@ -67,4 +86,49 @@
 
 (ad-unadvise 'compilation-start)
 
-
+(require 'uniquify)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(coffee-tab-width 2)
+ '(erc-away-nickname "jesus_is_unavailable")
+ '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
+ '(erc-nick "jesus666")
+ '(erc-port nil)
+ '(erc-server nil)
+ '(erc-server-reconnect-attempts t)
+ '(erc-server-reconnect-timeout 20)
+ '(js2-strict-inconsistent-return-warning nil)
+ '(projectile-globally-ignored-directories (quote (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "node_modules")))
+ '(projectile-project-root-files (quote ("rebar.config" "project.clj" "SConstruct" "pom.xml" "build.sbt" "build.gradle" "Gemfile" "requirements.txt" "package.json" "gulpfile.js" "Gruntfile.js" "bower.json" "composer.json" "Cargo.toml" "mix.exs" ".gitignore")))
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(bg:erc-color-face10 ((t (:background "color-18"))))
+ '(bg:erc-color-face14 ((t (:background "black"))))
+ '(diff-added ((t (:inherit diff-changed :background "#ffffff" :foreground "#000000"))))
+ '(diff-file-header ((t (:background "grey70" :foreground "black" :weight bold))))
+ '(diff-refine-change ((t (:background "color-45"))))
+ '(erb-face ((t (:background "color-240"))))
+ '(fg:erc-color-face1 ((t (:background "#ffffff" :foreground "black"))))
+ '(fringe ((t (:background "black" :foreground "brightwhite"))))
+ '(js2-external-variable ((t (:foreground "#aaa"))))
+ '(magit-diff-add ((t (:background "#ffffff" :foreground "green"))))
+ '(magit-diff-del ((t (:background "#ffffff" :foreground "red"))))
+ '(magit-item-highlight ((t (:background "black"))))
+ '(magit-key-mode-button-face ((t (:foreground "#00ffff"))))
+ '(org-document-info ((t (:foreground "#cccccc"))))
+ '(org-pomodoro-mode-line ((t (:foreground "#cc0000"))))
+ '(org-pomodoro-mode-line-break ((t (:foreground "#007700"))))
+ '(org-table ((t (:foreground "#cccccc"))))
+ '(w3m-anchor ((t (:foreground "#cccccc"))))
+ '(w3m-arrived-anchor ((t (:foreground "#ffffff"))))
+ '(w3m-header-line-location-content ((t (:background "Gray90" :foreground "#000077"))))
+ '(w3m-image-anchor ((t (:background "#550055"))))
+ '(w3m-session-select ((t (:foreground "#999999"))))
+ '(w3m-tab-unselected ((t (:background "blue" :foreground "#ffffff")))))

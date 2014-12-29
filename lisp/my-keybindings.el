@@ -101,3 +101,5 @@
 ;;projectile-mode
 (setq projectile-keymap-prefix (kbd "C-c C-p"))
 (define-key projectile-mode-map (kbd "C-c p x") 'projectile-run-async-shell-command-in-root)
+(define-key projectile-mode-map (kbd "C-c p p") 'projectile-test-project)
+(define-key projectile-mode-map (kbd "C-c p a") 'projectile-ack)

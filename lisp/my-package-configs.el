@@ -206,12 +206,14 @@
 ;; org-mode
 (setq org-log-done t)
 (setq org-pomodoro-play-sounds nil)
+(add-hook 'org-mode-hook 'org-trello-mode)
+
 
 (defun my-c++-mode-hook ()
   (setq indent-tabs-mode t
-				c-basic-offset 2)
+        c-basic-offset 2)
   (auto-fill-mode)
-	(c-set-offset 'substatement-open 0))
+  (c-set-offset 'substatement-open 0))
 
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (add-hook 'c-mode-hook 'my-c++-mode-hook)
@@ -225,6 +227,7 @@
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
-
+;;bash-completion
+(bash-completion-setup)
 
 

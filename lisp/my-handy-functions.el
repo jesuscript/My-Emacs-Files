@@ -58,5 +58,18 @@
   (interactive)
   (replace-string "" "" nil (point-min) (point-max)))
 
+(defun org-set-line-checkbox (arg)
+  (interactive "P")
+  (let ((n (or arg 1)))
+    (when (region-active-p)
+      (setq n (count-lines (region-beginning)
+                           (region-end)))
+      (goto-char (region-beginning)))
+    (dotimes (i n)
+      (beginning-of-line)
+      (insert "- [ ] ")
+      (forward-line))
+    (beginning-of-line)))
+
 
 (provide 'my-handy-functions)
