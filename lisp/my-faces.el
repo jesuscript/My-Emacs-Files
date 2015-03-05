@@ -16,7 +16,7 @@
 (set-face-foreground 'tool-bar "#ffffff")
 
 (setq ace-jump-mode-gray-background t)
-(set-face-foreground 'ace-jump-face-foreground "#ffffff")
+;(set-face-foreground 'ace-jump-face-foreground "#ffffff")
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

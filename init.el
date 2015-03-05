@@ -1,23 +1,12 @@
 ;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
 
-(setq my-el-get-packages '(el-get
-                           js2-mode
-                           dash
-                           s
-                           multiple-cursors
-                           org-pomodoro
-                           go-mode
-                           auto-complete
-                           js2-refactor emacs-http-server scss-mode
-                           ctags
-                           rainbow-delimiters
-                           rainbow-mode
-                           ace-jump-mode
-                           emacs-w3m
-                           regex-tool
-                           bash-completion))
-
-(setq my-package-packages '(csharp-mode
+(setq my-package-packages '(js2-mode
+                            regex-tool
+                            w3m
+                            rainbow-mode
+                            rainbow-delimiters
+                            ace-jump-mode
+                            auto-complete
                             magit
                             yaml-mode
                             csv-mode
@@ -31,9 +20,13 @@
                             feature-mode
                             nginx-mode
                             enh-ruby-mode
-                            org-trello))
+                            org-trello
+                            markdown-mode
+                            coffee-mode
+                            ))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
+
 
 ;;;;;;;;;;;;;;;;;; GLOBAL SETTINGS ;;;;;;;;;;;;;;;
 
@@ -75,7 +68,7 @@
 (load "indentation-config" t)
 (load "my-package-configs")
 (load "my-handy-functions")
-(load "my-keybindings")
+;(load "my-keybindings")
 (load "my-macros")
 (load "my-local-macros" t)
 (load "my-faces")
@@ -92,17 +85,24 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(coffee-tab-width 2)
  '(erc-away-nickname "jesus_is_unavailable")
- '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
+ '(erc-modules
+   (quote
+    (autoaway autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
  '(erc-nick "jesus666")
  '(erc-port nil)
  '(erc-server nil)
  '(erc-server-reconnect-attempts t)
  '(erc-server-reconnect-timeout 20)
+ '(js2-basic-offset 2)
  '(js2-strict-inconsistent-return-warning nil)
- '(projectile-globally-ignored-directories (quote (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "node_modules")))
- '(projectile-project-root-files (quote ("rebar.config" "project.clj" "SConstruct" "pom.xml" "build.sbt" "build.gradle" "Gemfile" "requirements.txt" "package.json" "gulpfile.js" "Gruntfile.js" "bower.json" "composer.json" "Cargo.toml" "mix.exs" ".gitignore")))
+ '(org-agenda-files (quote ("~/CODE/ETHEREUM/todo_ethereum.org")))
+ '(projectile-globally-ignored-directories
+   (quote
+    (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "node_modules")))
+ '(projectile-project-root-files
+   (quote
+    ("rebar.config" "project.clj" "SConstruct" "pom.xml" "build.sbt" "build.gradle" "Gemfile" "requirements.txt" "package.json" "gulpfile.js" "Gruntfile.js" "bower.json" "composer.json" "Cargo.toml" "mix.exs" ".gitignore")))
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

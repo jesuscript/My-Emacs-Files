@@ -1,35 +1,8 @@
-;; el-get
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (let (el-get-master-branch)
-      (goto-char (point-max))
-      (eval-print-last-sexp))))
-
-
-(push '(:name yasnippet
-              :website "https://github.com/capitaomorte/yasnippet.git"
-              :description "YASnippet is a template system for Emacs."
-              :type github
-              :pkgname "capitaomorte/yasnippet"
-              :features "yasnippet"
-              :compile "yasnippet.el")
-      el-get-sources)
-
-
-(setq my-packages (append my-el-get-packages
-                          (mapcar 'el-get-source-name el-get-sources)))
-
-(el-get-cleanup my-packages)
-(el-get 'sync my-packages)
-
 ;;package.el
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+			 ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")))
 
 (package-initialize)
 
@@ -70,10 +43,6 @@
 ;; autopair
 (electric-pair-mode t)
 
-;; coffeescript
-(add-to-list 'load-path "~/.emacs.d/coffee-mode")
-(require 'coffee-mode)
-(custom-set-variables '(coffee-tab-width 2))
 ;; automatically clean up bad whitespace
 (setq whitespace-action '(auto-cleanup)) 
 ;; only show bad whitespace
@@ -135,7 +104,7 @@
       )
 
 ;;js2-mode
-(add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
+;(add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
 
 ;; handlebars indentation for html/sgml
 (require 'handlebars-sgml-hacks)
@@ -144,9 +113,9 @@
 ;; yasnippets
 (yas-global-mode 1)
 
-(add-hook 'js2-mode-hook
-          '(lambda ()
-             (yas-minor-mode)))
+;; (add-hook 'js2-mode-hook
+;;           '(lambda ()
+;;              (yas-minor-mode)))
 
 (setq yas-snippet-dirs '("~/.emacs.d/snippets/"))
 (setq yas-prompt-functions '(yas-ido-prompt))
@@ -206,7 +175,7 @@
 ;; org-mode
 (setq org-log-done t)
 (setq org-pomodoro-play-sounds nil)
-(add-hook 'org-mode-hook 'org-trello-mode)
+;(add-hook 'org-mode-hook 'org-trello-mode)
 
 
 (defun my-c++-mode-hook ()
@@ -229,5 +198,12 @@
 
 ;;bash-completion
 (bash-completion-setup)
+
+
+;;solidity-mode
+;(require 'solidity-mode)
+;(setq solidity-solc-path "~/CODE/ETHEREUM/cpp-ethereum/build/solc")
+;(add-to-list 'flycheck-checkers 'solidity-checker)
+
 
 

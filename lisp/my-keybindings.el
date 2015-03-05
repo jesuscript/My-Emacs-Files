@@ -1,5 +1,10 @@
 (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer)
 
+(global-set-key (kbd "C-j") 'newline-and-indent)
+
+(global-set-key (kbd "C-x g g") 'point-to-register)
+(global-set-key (kbd "C-x g j") 'jump-to-register)
+
 (global-set-key (kbd "M-]") 'select-next-window)
 (global-set-key (kbd "M-[")  'select-previous-window)
 
@@ -34,11 +39,11 @@
 
 (global-unset-key (kbd "C-t"))
 
-(js2r-add-keybindings-with-prefix "C-c C-j")
-(js2r-add-keybindings-with-prefix "C-c j")
+;; (js2r-add-keybindings-with-prefix "C-c C-j")
+;; (js2r-add-keybindings-with-prefix "C-c j")
 
-(define-key js2-mode-map (kbd "C-c e") 'js2-display-error-list)
-(define-key js2-mode-map (kbd "C-j") 'js2-line-break)
+;; (define-key js2-mode-map (kbd "C-c e") 'js2-display-error-list)
+;; (define-key js2-mode-map (kbd "C-j") 'js2-line-break)
 
 (define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
 (define-key yas-minor-mode-map (kbd "M-S") 'yas-insert-snippet)
@@ -103,3 +108,5 @@
 (define-key projectile-mode-map (kbd "C-c p x") 'projectile-run-async-shell-command-in-root)
 (define-key projectile-mode-map (kbd "C-c p p") 'projectile-test-project)
 (define-key projectile-mode-map (kbd "C-c p a") 'projectile-ack)
+
+
