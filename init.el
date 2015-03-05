@@ -10,6 +10,7 @@
                             magit
                             yaml-mode
                             csv-mode
+                            yasnippet
                             jade-mode
                             floobits
                             projectile
@@ -20,7 +21,6 @@
                             feature-mode
                             nginx-mode
                             enh-ruby-mode
-                            org-trello
                             markdown-mode
                             coffee-mode
                             ))
@@ -68,7 +68,7 @@
 (load "indentation-config" t)
 (load "my-package-configs")
 (load "my-handy-functions")
-;(load "my-keybindings")
+(load "my-keybindings")
 (load "my-macros")
 (load "my-local-macros" t)
 (load "my-faces")

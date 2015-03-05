@@ -17,21 +17,6 @@
 
 
 
-;; Wanderlust
-(add-to-list 'load-path "~/.emacs.d/emacs-w3m")
-(require 'w3m)
-(setq mm-text-html-renderer 'w3m)
-                                        ;(require 'mime-w3m)
-(autoload 'wl "wl" "Wanderlust" t)
-
-
-;; rhtml-mode
-(add-to-list 'load-path "~/.emacs.d/rhtml")
-(require 'rhtml-mode)
-(add-hook 'rhtml-mode-hook
-          (lambda () (rinari-launch)))
-
-
 ;; Helm
 (add-to-list 'load-path "~/.emacs.d/helm")
 (require 'helm-config)
@@ -67,9 +52,6 @@
             (add-to-list 'ac-sources 'ac-source-rsense-method)
             (add-to-list 'ac-sources 'ac-source-rsense-constant)))
 
-;;project grep
-(require 'project-grep)
-
 ;;handlebars
 (require 'handlebars-mode)
 
@@ -85,26 +67,6 @@
 (autoload 'pcomplete/ack "pcmpl-ack")
 (autoload 'pcomplete/ack-grep "pcmpl-ack")
 
-;;project-root
-(require 'project-root)
-(setq project-roots
-      `(("Any project"
-         :root-contains-files (".project-root")
-         )
-        ("Meteor Project"
-         :root-contains-files (".meteor")
-         )
-        ("Emacs project"
-         :root-contains-files ("init.el")
-         )
-        ("Node project"
-         :root-contains-files ("package.json")
-         )
-        )
-      )
-
-;;js2-mode
-;(add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
 
 ;; handlebars indentation for html/sgml
 (require 'handlebars-sgml-hacks)
@@ -129,10 +91,6 @@
 (setq ac-auto-show-menu 0.1)
 (setq ac-quick-help-delay 0.3)
 
-
-;; PHP Mode
-(autoload 'php-mode "php-mode" "Major mode for editing php code." t)
-
 ;; CSS Mode
 (add-hook 'css-mode-hook 'rainbow-mode)
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
@@ -143,10 +101,6 @@
 (add-hook 'scss-mode-hook 'rainbow-mode)
 (require 'my-aj-compilation) ;add-on (hides compilation buffer); added hide-exceptions (e.g. "ack")
 (setq scss-compile-at-save nil)
-
-;;tags
-(require 'ctags)
-(setq tags-case-fold-search nil)
 
 ;;rainbow-delimiter
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
@@ -175,7 +129,7 @@
 ;; org-mode
 (setq org-log-done t)
 (setq org-pomodoro-play-sounds nil)
-;(add-hook 'org-mode-hook 'org-trello-mode)
+
 
 
 (defun my-c++-mode-hook ()
@@ -195,15 +149,6 @@
   (ansi-color-apply-on-region (point-min) (point-max))
   (toggle-read-only))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
-
-;;bash-completion
-(bash-completion-setup)
-
-
-;;solidity-mode
-;(require 'solidity-mode)
-;(setq solidity-solc-path "~/CODE/ETHEREUM/cpp-ethereum/build/solc")
-;(add-to-list 'flycheck-checkers 'solidity-checker)
 
 
 

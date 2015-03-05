@@ -48,7 +48,7 @@
 (define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
 (define-key yas-minor-mode-map (kbd "M-S") 'yas-insert-snippet)
 
-;(local-set-key (kbd "M-f") 'yas-next-field)
+                                        ;(local-set-key (kbd "M-f") 'yas-next-field)
 
 (global-set-key (kbd "C-c C-c") 'ctags-create-or-update-tags-table)
 
@@ -92,16 +92,19 @@
 (global-set-key (kbd "C-c o c") 'org-capture)
 (global-set-key (kbd "C-c o a") 'org-agenda)
 (global-set-key (kbd "C-c o b") 'org-iswitchb)
-(global-set-key (kbd "C-c o p") 'org-pomodoro) ;;org-pomodoro
-(define-key org-mode-map (kbd "C-j") 'org-return)
-(define-key org-mode-map (kbd "M-j") 'org-insert-todo-heading)
-(define-key org-mode-map (kbd "M-p") 'org-pomodoro)
-(define-key org-mode-map (kbd "C-c u p") 'org-clock-update-time-maybe)
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (define-key org-mode-map (kbd "C-j") 'org-return)
+            (define-key org-mode-map (kbd "M-j") 'org-insert-todo-heading)
+            (define-key org-mode-map (kbd "C-c u p") 'org-clock-update-time-maybe)
+            ))
 
 ;;macros
 (define-key global-map (kbd "C-c [") 'untabify-and-indent-buffer)
-(define-key c++-mode-map (kbd "C-c [") 'tabify-and-indent-buffer)
-(define-key c-mode-map (kbd "C-c [") 'tabify-and-indent-buffer)
+;; (define-key c++-mode-map (kbd "C-c [") 'tabify-and-indent-buffer)
+;; (define-key c-mode-map (kbd "C-c [") 'tabify-and-indent-buffer)
+
 
 ;;projectile-mode
 (setq projectile-keymap-prefix (kbd "C-c C-p"))
