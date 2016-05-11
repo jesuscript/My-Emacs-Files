@@ -21,12 +21,6 @@
 
 (global-set-key (kbd "C-c ; C-w") 'rinari-web-server-restart)
 
-(global-set-key (kbd "C-c . g") 'project-grep)
-
-(global-set-key (kbd "C-c p a") 'project-root-ack)
-(global-set-key (kbd "C-c p f") 'project-root-find-file)
-(global-set-key (kbd "C-c p l") 'project-root-browse-seen-projects)
-
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 (global-set-key (kbd "C-z") 'undo)
@@ -39,11 +33,11 @@
 
 (global-unset-key (kbd "C-t"))
 
-;; (js2r-add-keybindings-with-prefix "C-c C-j")
-;; (js2r-add-keybindings-with-prefix "C-c j")
+(js2r-add-keybindings-with-prefix "C-c C-j")
+(js2r-add-keybindings-with-prefix "C-c j")
 
-;; (define-key js2-mode-map (kbd "C-c e") 'js2-display-error-list)
-;; (define-key js2-mode-map (kbd "C-j") 'js2-line-break)
+(define-key js2-mode-map (kbd "C-c e") 'js2-display-error-list)
+(define-key js2-mode-map (kbd "C-j") 'js2-line-break)
 
 (define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
 (define-key yas-minor-mode-map (kbd "M-S") 'yas-insert-snippet)
@@ -110,6 +104,15 @@
 (setq projectile-keymap-prefix (kbd "C-c C-p"))
 (define-key projectile-mode-map (kbd "C-c p x") 'projectile-run-async-shell-command-in-root)
 (define-key projectile-mode-map (kbd "C-c p p") 'projectile-test-project)
-(define-key projectile-mode-map (kbd "C-c p a") 'projectile-ack)
+(define-key projectile-mode-map (kbd "C-c p a") 'projectile-ag)
 
+
+;;ansible-mode
+(global-set-key (kbd "C-c a e") 'my-ansible-encrypt-buffer)
+(global-set-key (kbd "C-c a d") 'my-ansible-decrypt-buffer)
+
+(global-set-key (kbd "C-c m j") 'js2-mode)
+(global-set-key (kbd "C-c m s") 'js2-jsx-mode)
+(define-key js2-mode-map (kbd "C-c m w") 'web-jsx-mode)
+(define-key js2-jsx-mode-map (kbd "C-c m w") 'web-jsx-mode)
 

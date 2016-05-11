@@ -71,5 +71,22 @@
       (forward-line))
     (beginning-of-line)))
 
+;;ansible-mode
+(defun my-ansible-encrypt-buffer ()
+  (interactive)
+  (ansible::encrypt-buffer)
+  (save-buffer)
+  )
+(defun my-ansible-decrypt-buffer ()
+  (interactive)
+  (ansible::decrypt-buffer)
+  (save-buffer)
+  )
+
+(defun web-jsx-mode ()
+  (interactive)
+  (web-mode)
+  (web-mode-set-engine "jsx")
+  )
 
 (provide 'my-handy-functions)

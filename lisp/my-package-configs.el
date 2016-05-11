@@ -18,7 +18,6 @@
 
 
 ;; Helm
-(add-to-list 'load-path "~/.emacs.d/helm")
 (require 'helm-config)
 
 ;; Interactively Do Things (highly recommended, but not strictly required)
@@ -36,6 +35,10 @@
 ;;ZenCoding
 (require 'zencoding-mode)
 (add-hook 'sgml-mode-hook 'zencoding-mode)
+(add-hook 'handlebars-mode-hook 'zencoding-mode)
+(add-hook 'web-mode-hook 'zencoding-mode)
+(add-hook 'js2-jsx-mode-hook 'zencoding-mode)
+
 
 (add-hook 'ecmascript-mode-hook
           (lambda ()
@@ -61,12 +64,6 @@
       (append '(("\\.cs$" . csharp-mode)) auto-mode-alist))
 
 
-;;ack
-(add-to-list 'load-path "~/.emacs.d/ack-el")
-(require 'ack)
-(autoload 'pcomplete/ack "pcmpl-ack")
-(autoload 'pcomplete/ack-grep "pcmpl-ack")
-
 
 ;; handlebars indentation for html/sgml
 (require 'handlebars-sgml-hacks)
@@ -90,6 +87,9 @@
 (define-key ac-complete-mode-map "\r" nil)
 (setq ac-auto-show-menu 0.1)
 (setq ac-quick-help-delay 0.3)
+
+(add-hook 'js2-jsx-mode-hook 'auto-complete-mode)
+
 
 ;; CSS Mode
 (add-hook 'css-mode-hook 'rainbow-mode)
@@ -152,3 +152,32 @@
 
 
 
+;;ansible
+(add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
+
+;;js2-mode
+(setq js2-strict-missing-semi-warning nil)
+(setq js2-missing-semi-one-line-override nil)
+
+;;js2-refactor
+(add-hook 'js2-mode-hook 'js2-refactor-mode )
+
+;;sh-mode
+
+(defun gker-setup-sh-mode ()
+    "My own personal preferences for `sh-mode'.
+
+This is a custom function that sets up the parameters I usually
+prefer for `sh-mode'.  It is automatically added to
+`sh-mode-hook', but is can also be called interactively."
+    (interactive)
+    (setq sh-basic-offset 2
+          sh-indentation 2))
+(add-hook 'sh-mode-hook 'gker-setup-sh-mode)
+(add-hook 'sh-mode-hook (lambda () (setq indent-tabs-mode t)))
+
+
+;;web-mode
+(setq web-mode-engines-alist
+      '(("jsx"    . "\\.js\\'")
+        ))

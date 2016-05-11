@@ -10,7 +10,6 @@
 
 
 (set-face-foreground 'button "#ffffff")
-(set-face-foreground 'comint-highlight-prompt "#ffffff")
 (set-face-foreground 'link "#ffffff")
 (set-face-foreground 'minibuffer-prompt "#ffffff")
 (set-face-foreground 'tool-bar "#ffffff")
@@ -23,6 +22,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(web-mode-html-attr-value-face ((t (:foreground "#ff2299"))))
+ '(web-mode-html-attr-name-face ((t (:foreground "#00ff77"))))
+ '(web-mode-html-tag-face ((t (:foreground "#0077ff"))))
  '(bg:erc-color-face10 ((t (:background "color-18"))))
  '(bg:erc-color-face14 ((t (:background "black"))))
  '(diff-added ((t (:inherit diff-changed :background "#ffffff" :foreground "#000000"))))

@@ -1,6 +1,12 @@
 ;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
 
 (setq my-package-packages '(js2-mode
+                            js2-refactor
+                            go-mode
+                            solidity-mode
+                            discover
+                            discover-my-major
+                            discover-js2-refactor
                             regex-tool
                             w3m
                             rainbow-mode
@@ -13,6 +19,7 @@
                             yasnippet
                             jade-mode
                             floobits
+                            ag
                             projectile
                             ack-and-a-half
                             helm-projectile
@@ -23,7 +30,17 @@
                             enh-ruby-mode
                             markdown-mode
                             coffee-mode
-                            ))
+                            vagrant
+                            scss-mode
+                            docker
+                            dockerfile-mode
+                            ansible
+                            password-generator
+                            haskell-mode
+                            web-mode
+                            rust-mode
+                            toml-mode
+                            helm))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
@@ -49,9 +66,11 @@
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.less" . css-mode))
 (add-to-list 'auto-mode-alist '("\\.srml" . sgml-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . sgml-mode))
 (add-to-list 'auto-mode-alist '("\\.cshtml\\'" . sgml-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
 (add-to-list 'auto-mode-alist '("\\.ejs\\'" . sgml-mode))
 (add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode))
@@ -79,6 +98,8 @@
 
 (ad-unadvise 'compilation-start)
 
+(require 'solidity-mode)
+
 (require 'uniquify)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -102,7 +123,7 @@
     (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "node_modules")))
  '(projectile-project-root-files
    (quote
-    ("rebar.config" "project.clj" "SConstruct" "pom.xml" "build.sbt" "build.gradle" "Gemfile" "requirements.txt" "package.json" "gulpfile.js" "Gruntfile.js" "bower.json" "composer.json" "Cargo.toml" "mix.exs" ".gitignore")))
+    ("rebar.config" "project.clj" "SConstruct" "pom.xml" "build.sbt" "build.gradle" "Gemfile" "requirements.txt" "package.json" "gulpfile.js" "Gruntfile.js" "bower.json" "composer.json" "Cargo.toml" "mix.exs" ".gitignore" ".meteor/packages")))
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
