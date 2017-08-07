@@ -1,0 +1,27 @@
+# -*- mode: snippet -*-
+# name: component
+# key: component
+# --
+
+import {Observable} from 'rx'
+import {hJSX} from '@cycle/dom';
+import isolate from '@cycle/isolate'
+
+const view = (state$) => (
+  
+)
+
+const model = (actions) => (
+  
+)
+
+const intent = (DOM) => ({
+  
+})
+
+
+
+export default isolate(({props$, DOM}) => ({
+  DOM: view(props$),
+  props$: model(intent(DOM))
+}))

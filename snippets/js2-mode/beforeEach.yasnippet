@@ -2,4 +2,6 @@
 # name: beforeEach
 # key: beforeEach
 # --
-beforeEach(${1:inject}${1:$(cond ((string-match "module" yas-text) "") ((string-match "inject" yas-text) "(function") (t "function"))}${2:$(if (string-match "$provide" yas-text) "(function" "")}($2)${2:$(if (string-match "$provide" yas-text) "{" "")}${1:$(if (string-match "module" yas-text) "" "{" )}$0${1:$(cond ((string-match "module" yas-text) "") ((string-match "inject" yas-text) "}));") (t "});"))}${2:$(if (string-match "$provide" yas-text) "})" "")}${1:$(if (string-match "module" yas-text) ");" "" )}
+beforeEach(function(){
+$0
+})

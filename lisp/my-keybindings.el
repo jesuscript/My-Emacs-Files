@@ -14,6 +14,8 @@
 (global-set-key "\C-x\C-k" 'kill-region)
 (global-set-key "\C-x\C-o" 'goto-line)
 
+(global-set-key (kbd "C-x p") 'password-generator-phonetic)
+
 (define-key minibuffer-local-map "\C-x\C-k" 'kill-region)
 (define-key minibuffer-local-map "\C-x\C-o" 'goto-line)
 

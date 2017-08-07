@@ -10,3 +10,4 @@ tramp
 eshell
 projectile*
 elpa/
+*.elc

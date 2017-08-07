@@ -180,4 +180,5 @@ prefer for `sh-mode'.  It is automatically added to
 ;;web-mode
 (setq web-mode-engines-alist
       '(("jsx"    . "\\.js\\'")
+        ("ctemplate"    . "\\.html\\'")
         ))
