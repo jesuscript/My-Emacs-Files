@@ -11,3 +11,4 @@ eshell
 projectile*
 elpa/
 *.elc
+ido.last

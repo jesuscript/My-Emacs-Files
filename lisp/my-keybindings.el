@@ -63,6 +63,10 @@
   (local-unset-key (kbd "M-f"))
   (local-unset-key (kbd "M-b")))
 
+;; clipboard copy/paste
+(global-set-key (kbd "C-c c") 'pbcopy)
+(global-set-key (kbd "C-c v") 'pbpaste)
+
 ;;yasnippet
 (add-hook 'yas-before-expand-snippet-hook 'my-yas-key-mapping-hook)
 (add-hook 'yas-after-exit-snippet-hook 'my-yas-key-unmapping-hook)

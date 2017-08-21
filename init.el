@@ -68,6 +68,19 @@
       kept-old-versions 5    ; and how many of the old
       )
 
+
+;; (defun copy-from-osx ()
+;;       (shell-command-to-string "pbpaste"))
+
+;; (defun paste-to-osx (text &optional push)
+;;   (let ((process-connection-type nil))
+;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+;;       (process-send-string proc text)
+;;       (process-send-eof proc))))
+
+;; (setq interprogram-cut-function 'paste-to-osx)
+;; (setq interprogram-paste-function 'copy-from-osx)
+
 ;;;;;;;;;;;;;; MODE-EXTENSION MAPPINGS ;;;;;;;;;;;
 
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
@@ -123,9 +136,12 @@
  '(erc-server nil)
  '(erc-server-reconnect-attempts t)
  '(erc-server-reconnect-timeout 20)
- '(js2-basic-offset 2)
+ '(js-indent-level 2)
  '(js2-strict-inconsistent-return-warning nil)
  '(org-agenda-files (quote ("~/CODE/ETHEREUM/todo_ethereum.org")))
+ '(package-selected-packages
+   (quote
+    (elm-mode toml-mode rust-mode web-mode haskell-mode password-generator ansible dockerfile-mode docker scss-mode vagrant coffee-mode markdown-mode enh-ruby-mode nginx-mode feature-mode restclient flx-ido helm-projectile projectile ag floobits jade-mode csv-mode yaml-mode auto-complete rainbow-delimiters rainbow-mode w3m regex-tool discover-js2-refactor discover-my-major discover solidity-mode go-mode js2-refactor magit js2-mode ack-and-a-half ace-jump-mode)))
  '(projectile-globally-ignored-directories
    (quote
     (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "node_modules")))
@@ -142,7 +158,7 @@
  '(bg:erc-color-face14 ((t (:background "black"))))
  '(diff-added ((t (:inherit diff-changed :background "#ffffff" :foreground "#000000"))))
  '(diff-file-header ((t (:background "grey70" :foreground "black" :weight bold))))
- '(diff-refine-change ((t (:background "color-45"))))
+ '(diff-refine-changed ((t (:background "color-45"))))
  '(erb-face ((t (:background "color-240"))))
  '(fg:erc-color-face1 ((t (:background "#ffffff" :foreground "black"))))
  '(fringe ((t (:background "black" :foreground "brightwhite"))))
@@ -160,4 +176,7 @@
  '(w3m-header-line-location-content ((t (:background "Gray90" :foreground "#000077"))))
  '(w3m-image-anchor ((t (:background "#550055"))))
  '(w3m-session-select ((t (:foreground "#999999"))))
- '(w3m-tab-unselected ((t (:background "blue" :foreground "#ffffff")))))
+ '(w3m-tab-unselected ((t (:background "blue" :foreground "#ffffff"))))
+ '(web-mode-html-attr-name-face ((t (:foreground "#00ff77"))))
+ '(web-mode-html-attr-value-face ((t (:foreground "#ff2299"))))
+ '(web-mode-html-tag-face ((t (:foreground "#0077ff")))))

@@ -154,6 +154,7 @@
 
 ;;ansible
 (add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
+(setq ansible::vault-password-file "~/.vault_pass.txt")
 
 ;;js2-mode
 (setq js2-strict-missing-semi-warning nil)

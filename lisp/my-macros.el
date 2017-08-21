@@ -35,3 +35,13 @@
     ))
 
 (global-set-key (kbd "C-o") 'open-line-and-indent)
+
+
+(defun pbcopy ()
+      (interactive)
+      (call-process-region (point) (mark) "pbcopy")
+      (setq deactivate-mark t))
+
+(defun pbpaste ()
+  (interactive)
+    (call-process-region (point) (if mark-active (mark) (point)) "pbpaste" t t))
