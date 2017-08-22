@@ -2,7 +2,6 @@ backup/
 ac-comphist.dat
 auto-save-list/
 el-get/*
-indentation-config.el
 .project-roots
 my-local-macros.el
 url/
