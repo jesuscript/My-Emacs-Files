@@ -11,3 +11,9 @@ projectile*
 elpa/
 *.elc
 ido.last
+elpa/archives
+/elpa/archives/gnu/archive-contents
+/elpa/archives/gnu/archive-contents.signed
+/elpa/archives/marmalade/archive-contents
+/elpa/archives/melpa-stable/archive-contents
+/elpa/archives/melpa/archive-contents

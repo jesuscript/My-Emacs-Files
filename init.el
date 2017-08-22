@@ -48,7 +48,8 @@
                             rust-mode
                             toml-mode
                             helm
-                            elm-mode))
+                            elm-mode
+			    pug-mode))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
@@ -141,7 +142,8 @@
  '(org-agenda-files (quote ("~/CODE/ETHEREUM/todo_ethereum.org")))
  '(package-selected-packages
    (quote
-    (elm-mode toml-mode rust-mode web-mode haskell-mode password-generator ansible dockerfile-mode docker scss-mode vagrant coffee-mode markdown-mode enh-ruby-mode nginx-mode feature-mode restclient flx-ido helm-projectile projectile ag floobits jade-mode csv-mode yaml-mode auto-complete rainbow-delimiters rainbow-mode w3m regex-tool discover-js2-refactor discover-my-major discover solidity-mode go-mode js2-refactor magit js2-mode ack-and-a-half ace-jump-mode)))
+    ((\, pug-mode)
+     pug-mode elm-mode toml-mode rust-mode web-mode haskell-mode password-generator ansible dockerfile-mode docker scss-mode vagrant coffee-mode markdown-mode enh-ruby-mode nginx-mode feature-mode restclient flx-ido helm-projectile projectile ag floobits jade-mode csv-mode yaml-mode auto-complete rainbow-delimiters rainbow-mode w3m regex-tool discover-js2-refactor discover-my-major discover solidity-mode go-mode js2-refactor magit js2-mode ack-and-a-half ace-jump-mode)))
  '(projectile-globally-ignored-directories
    (quote
     (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "node_modules")))
@@ -158,6 +160,7 @@
  '(bg:erc-color-face14 ((t (:background "black"))))
  '(diff-added ((t (:inherit diff-changed :background "#ffffff" :foreground "#000000"))))
  '(diff-file-header ((t (:background "grey70" :foreground "black" :weight bold))))
+ '(diff-refine-change ((t (:background "color-45"))) t)
  '(diff-refine-changed ((t (:background "color-45"))))
  '(erb-face ((t (:background "color-240"))))
  '(fg:erc-color-face1 ((t (:background "#ffffff" :foreground "black"))))
