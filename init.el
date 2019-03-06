@@ -49,10 +49,17 @@
                             toml-mode
                             helm
                             elm-mode
-			    pug-mode))
+                            pug-mode
+                            racer
+                            company
+                            cargo
+                            rjsx-mode
+                            elpy))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 
+;; (require 'epa-file)
+;; (epa-file-enable)
 
 ;;;;;;;;;;;;;;;;;; GLOBAL SETTINGS ;;;;;;;;;;;;;;;
 
@@ -86,11 +93,10 @@
 
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.less" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.less" . less-css-mode))
 (add-to-list 'auto-mode-alist '("\\.srml" . sgml-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . sgml-mode))
 (add-to-list 'auto-mode-alist '("\\.cshtml\\'" . sgml-mode))
 (add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
@@ -142,14 +148,23 @@
  '(org-agenda-files (quote ("~/CODE/ETHEREUM/todo_ethereum.org")))
  '(package-selected-packages
    (quote
-    ((\, pug-mode)
-     pug-mode elm-mode toml-mode rust-mode web-mode haskell-mode password-generator ansible dockerfile-mode docker scss-mode vagrant coffee-mode markdown-mode enh-ruby-mode nginx-mode feature-mode restclient flx-ido helm-projectile projectile ag floobits jade-mode csv-mode yaml-mode auto-complete rainbow-delimiters rainbow-mode w3m regex-tool discover-js2-refactor discover-my-major discover solidity-mode go-mode js2-refactor magit js2-mode ack-and-a-half ace-jump-mode)))
+    (elpy rjsx-mode cargo company racer
+          (\, pug-mode)
+          pug-mode elm-mode toml-mode rust-mode web-mode haskell-mode password-generator ansible dockerfile-mode docker scss-mode vagrant coffee-mode markdown-mode enh-ruby-mode nginx-mode feature-mode restclient flx-ido helm-projectile projectile ag floobits jade-mode csv-mode yaml-mode auto-complete rainbow-delimiters rainbow-mode w3m regex-tool discover-js2-refactor discover-my-major discover solidity-mode go-mode js2-refactor magit js2-mode ack-and-a-half ace-jump-mode)))
  '(projectile-globally-ignored-directories
    (quote
     (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "node_modules")))
  '(projectile-project-root-files
    (quote
     ("rebar.config" "project.clj" "SConstruct" "pom.xml" "build.sbt" "build.gradle" "Gemfile" "requirements.txt" "package.json" "gulpfile.js" "Gruntfile.js" "bower.json" "composer.json" "Cargo.toml" "mix.exs" ".gitignore" ".meteor/packages")))
+ '(pyvenv-activate "nil")
+ '(safe-local-variable-values
+   (quote
+    ((eval pyvenv-activate "./.venv")
+     (python-shell-interpreter-args . "-i --simple-prompt")
+     (python-shell-interpreter . "ipython")
+     (python-shell-interpreter-args "-i --simple-prompt")
+     (python-shell-interpreter "ipython"))))
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

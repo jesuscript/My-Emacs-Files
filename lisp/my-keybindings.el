@@ -46,7 +46,6 @@
 
                                         ;(local-set-key (kbd "M-f") 'yas-next-field)
 
-(global-set-key (kbd "C-c C-c") 'ctags-create-or-update-tags-table)
 
 (global-set-key (kbd "C-x r") 'rename-file-and-buffer)
 
@@ -110,6 +109,7 @@
 (setq projectile-keymap-prefix (kbd "C-c C-p"))
 (define-key projectile-mode-map (kbd "C-c p x") 'projectile-run-async-shell-command-in-root)
 (define-key projectile-mode-map (kbd "C-c p p") 'projectile-test-project)
+(define-key projectile-mode-map (kbd "C-c p c") 'projectile-compile-project)
 (define-key projectile-mode-map (kbd "C-c p a") 'projectile-ag)
 
 
@@ -122,3 +122,13 @@
 (define-key js2-mode-map (kbd "C-c m w") 'web-jsx-mode)
 (define-key js2-jsx-mode-map (kbd "C-c m w") 'web-jsx-mode)
 
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "TAB") 'company-complete-selection))
+
+;;Cargo
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+
+;;elpy
+(define-key elpy-mode-map (kbd "C-c M-f") 'elpy-nav-indent-shift-right)
+(define-key elpy-mode-map (kbd "C-c M-b") 'elpy-nav-indent-shift-left)
