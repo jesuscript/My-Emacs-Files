@@ -1,92 +1,92 @@
+;;; my-handy-functions.el --- Utility functions -*- lexical-binding: t; -*-
+
+(require 'cl-lib)
+
 (defun select-next-window ()
-  "Switch to the next window" 
+  "Switch to the next window."
   (interactive)
   (select-window (next-window)))
 
 (defun select-previous-window ()
-  "Switch to the previous window" 
+  "Switch to the previous window."
   (interactive)
   (select-window (previous-window)))
 
 (defun my-goto-match-beginning ()
-  (when isearch-forward (goto-char isearch-other-end)))
+  "After isearch ends, move point to the beginning of the match."
+  (when (and (boundp 'isearch-other-end) isearch-other-end)
+    (goto-char isearch-other-end)))
 
 (defun rename-file-and-buffer (new-name)
-  "Renames both current buffer and file it's visiting to NEW-NAME."
+  "Rename both current buffer and the file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
-  (let ((name (buffer-name))
+  (let ((buf-name (buffer-name))
         (filename (buffer-file-name)))
-    (if (not filename)
-        (message "Buffer '%s' is not visiting a file!" name)
-      (if (get-buffer new-name)
-          (message "A buffer named '%s' already exists!" new-name)
-        (progn
-          (rename-file name new-name 1)
-          (rename-buffer new-name)
-          (set-visited-file-name new-name)
-          (set-buffer-modified-p nil))))))
+    (cond
+     ((not filename)
+      (message "Buffer '%s' is not visiting a file!" buf-name))
+     ((get-buffer new-name)
+      (message "A buffer named '%s' already exists!" new-name))
+     (t
+      (rename-file filename new-name 1)
+      (rename-buffer new-name)
+      (set-visited-file-name new-name)
+      (set-buffer-modified-p nil)))))
 
-
-
-(defun yas-ido-expand ()
-  "Lets you select (and expand) a yasnippet key"
+(defun yas-completing-expand ()
+  "Select and expand a yasnippet key using completing-read.
+Works with Vertico/Orderless out of the box."
   (interactive)
+  (unless (fboundp 'yas-expand)
+    (user-error "yasnippet not available"))
   (let ((original-point (point)))
-    (while (and
-            (not (= (point) (point-min) ))
-            (not
-             (string-match "[[:space:]\n]" (char-to-string (char-before)))))
-      (if (string-match "[_${}\.]" (char-to-string (char-before)))
+    (while (and (not (= (point) (point-min)))
+                (not (string-match-p "[[:space:]\n]" (char-to-string (char-before)))))
+      (if (string-match-p "[_${}\\.]" (char-to-string (char-before)))
           (backward-char 1)
         (backward-word 1)))
     (let* ((init-word (point))
            (word (buffer-substring init-word original-point))
-           (list (yas-active-keys)))
+           (keys (yas-active-keys)))
       (goto-char original-point)
-      (let ((key (remove-if-not
-                  (lambda (s) (string-match (concat "^" word) s)) list)))
-        (if (= (length key) 1)
-            (setq key (pop key))
-          (setq key (ido-completing-read "key: " list nil nil word)))
-        (delete-char (- init-word original-point))
+      (let* ((candidates (cl-remove-if-not
+                          (lambda (s) (string-match-p (concat "^" (regexp-quote word)) s))
+                          keys))
+             (key (cond
+                   ((= (length candidates) 1) (car candidates))
+                   (t (completing-read "Snippet: " keys nil nil word)))))
+        (delete-region init-word original-point)
         (insert key)
         (yas-expand)))))
 
-
 (defun remove-windows-new-line-chars ()
-  "Removes the annoying windows new line characters"
+  "Remove CR characters (^M) from Windows-style line endings."
   (interactive)
-  (replace-string "" "" nil (point-min) (point-max)))
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward "\r" nil t)
+      (replace-match "" nil t))))
 
 (defun org-set-line-checkbox (arg)
+  "Prefix lines in region (or ARG lines) with `- [ ] '."
   (interactive "P")
   (let ((n (or arg 1)))
-    (when (region-active-p)
-      (setq n (count-lines (region-beginning)
-                           (region-end)))
+    (when (use-region-p)
+      (setq n (count-lines (region-beginning) (region-end)))
       (goto-char (region-beginning)))
-    (dotimes (i n)
+    (dotimes (_ n)
       (beginning-of-line)
       (insert "- [ ] ")
-      (forward-line))
+      (forward-line 1))
     (beginning-of-line)))
 
-;;ansible-mode
-(defun my-ansible-encrypt-buffer ()
-  (interactive)
-  (ansible::encrypt-buffer)
-  (save-buffer)
-  )
-(defun my-ansible-decrypt-buffer ()
-  (interactive)
-  (ansible::decrypt-buffer)
-  (save-buffer)
-  )
-
 (defun web-jsx-mode ()
+  "Switch to web-mode with JSX engine."
   (interactive)
-  (web-mode)
-  (web-mode-set-engine "jsx")
-  )
+  (when (fboundp 'web-mode)
+    (web-mode))
+  (when (fboundp 'web-mode-set-engine)
+    (web-mode-set-engine "jsx")))
 
 (provide 'my-handy-functions)
+;;; my-handy-functions.el ends here

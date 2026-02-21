@@ -1,61 +1,43 @@
-;; Compilation mode
-;; Compilation ;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq compilation-scroll-output t)
-(setq compilation-window-height 17)
+;;; my-aj-compilation.el --- Compilation helpers with window restore -*- lexical-binding: t; -*-
 
-(setq compilation-ask-about-save nil)
-(setq compilation-save-buffers-predicate '(lambda () nil))
+(require 'seq)
 
-(defvar aj-exceptions-list (list "find" "perl" "ack")
-  "Exception commands for don't hide compilation window.")
+(setq compilation-scroll-output t
+      compilation-window-height 17
+      compilation-ask-about-save nil
+      compilation-save-buffers-predicate (lambda () nil))
 
+(defvar aj-exceptions-list '("find" "perl" "ack")
+  "Commands for which we do not restore window configuration on success.")
 
 (defvar aj-compilation-saved-window-configuration nil
-  "Previous window conf from before a compilation")
+  "Window configuration saved before starting compilation.")
 
 (defvar aj-compile-command ""
-  "The compile command used by compilation-start since
-  `compile-command' is only saved by `compile' command.")
+  "The compilation command used by `compilation-start'.")
 
-;; Hide *compilation* buffer if compile didn't give errors
-(defadvice compilation-start (before aj-compilation-save-window-configuration(command comint))
-  "Save window configuration before compilation in
-`aj-compilation-saved-window-configuration'"
+(defun aj--compilation-start-before (&rest args)
+  "Save window configuration and compilation command before compilation."
+  (setq aj-compile-command (car args))
+  (setq aj-compilation-saved-window-configuration (current-window-configuration)))
 
-  ;; compile command is not saved in compilation-start function only in
-  ;; compile function (rgrep only uses compilation-start)
-  (setq aj-compile-command command)
-  ;; Save window configuration
-  (setq aj-compilation-saved-window-configuration
-        (current-window-configuration)))
+(defun aj--is-exception-p (command)
+  "Return non-nil if COMMAND matches one of `aj-exceptions-list' at position 0."
+  (seq-some (lambda (ex)
+              (let ((pos (and (stringp command) (string-match ex command))))
+                (and (integerp pos) (zerop pos))))
+            aj-exceptions-list))
 
-(ad-activate 'compilation-start)
-
-
-(defun aj-is-exception (ex-list aj-compile-command)
-  "Search through exceptions list `ex-list'.
-Used to decide whether or not hide compilation window."
-  (if (> (length ex-list) 0)
-      (let* ((ex-position (string-match (car ex-list) aj-compile-command))
-             ;; Not nil and not 0 means that command was "find" at
-             ;; pos 0 which means that I don't want to restore the layout
-             (is-exception (and (integerp ex-position) (zerop ex-position))))
-        (if is-exception 
-            t
-          (aj-is-exception (cdr ex-list) aj-compile-command)))
-    nil))
-
-;; compilation-handle-exit returns (run-hook-with-args
-;; 'compilation-finish-functions cur-buffer msg) Could use but it only
-;; got a string describing status
-(defadvice compilation-handle-exit
-  (after aj-compilation-exit-function(process-status exit-status msg))
-  "Hack to restore window conf"
+(defun aj--compilation-handle-exit-after (process-status exit-status _msg)
+  "Restore window configuration when compilation succeeds."
   (when (and (eq process-status 'exit)
              (zerop exit-status)
-             (not (aj-is-exception aj-exceptions-list aj-compile-command)))
+             (not (aj--is-exception-p aj-compile-command))
+             (window-configuration-p aj-compilation-saved-window-configuration))
     (set-window-configuration aj-compilation-saved-window-configuration)))
 
-(ad-activate 'compilation-handle-exit)
+(advice-add 'compilation-start :before #'aj--compilation-start-before)
+(advice-add 'compilation-handle-exit :after #'aj--compilation-handle-exit-after)
 
 (provide 'my-aj-compilation)
+;;; my-aj-compilation.el ends here

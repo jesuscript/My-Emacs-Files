@@ -1,47 +1,47 @@
-;;;;;;;;;;;;;;;;;;;;; MACROS ;;;;;;;;;;;;;;;;;;;;;
-
-(fset 'ack-js-regex
-      "--type=js ")
-(define-key minibuffer-local-map (kbd "C-c j") 'ack-js-regex)
-
+;;; my-macros.el --- Keyboard macros & buffer helpers -*- lexical-binding: t; -*-
 
 (defun untabify-and-indent-buffer ()
+  "Untabify and re-indent the entire buffer."
   (interactive)
-  (progn
-    (untabify (point-min) (point-max))
-    (indent-region (point-min) (point-max))
-    )
-  )
+  (untabify (point-min) (point-max))
+  (indent-region (point-min) (point-max)))
 
 (defun tabify-and-indent-buffer ()
+  "Tabify and re-indent the entire buffer."
   (interactive)
-  (progn
-    (tabify (point-min) (point-max))
-    (indent-region (point-min) (point-max))
-    )
-  )
-
-
-
-
+  (tabify (point-min) (point-max))
+  (indent-region (point-min) (point-max)))
 
 (defun open-line-and-indent ()
+  "Open a new line above point and indent."
   (interactive)
-  (progn
-    (newline-and-indent)
-    (previous-line)
-    (end-of-line)
-    (indent-according-to-mode)
-    ))
+  (newline-and-indent)
+  (forward-line -1)
+  (end-of-line)
+  (indent-according-to-mode))
 
-(global-set-key (kbd "C-o") 'open-line-and-indent)
+(global-set-key (kbd "C-o") #'open-line-and-indent)
 
-
+;; macOS clipboard helpers
 (defun pbcopy ()
-      (interactive)
-      (call-process-region (point) (mark) "pbcopy")
-      (setq deactivate-mark t))
+  "Copy active region to macOS clipboard (pbcopy)."
+  (interactive)
+  (unless (eq system-type 'darwin)
+    (user-error "pbcopy is macOS-only"))
+  (unless (use-region-p)
+    (user-error "No active region"))
+  (call-process-region (region-beginning) (region-end) "pbcopy")
+  (setq deactivate-mark t))
 
 (defun pbpaste ()
+  "Paste from macOS clipboard (pbpaste) at point.
+If region is active, replace it."
   (interactive)
-    (call-process-region (point) (if mark-active (mark) (point)) "pbpaste" t t))
+  (unless (eq system-type 'darwin)
+    (user-error "pbpaste is macOS-only"))
+  (when (use-region-p)
+    (delete-region (region-beginning) (region-end)))
+  (call-process-region (point) (point) "pbpaste" t t))
+
+(provide 'my-macros)
+;;; my-macros.el ends here

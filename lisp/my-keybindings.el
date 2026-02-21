@@ -1,134 +1,111 @@
-(define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer)
+;;; my-keybindings.el --- Personal keybindings -*- lexical-binding: t; -*-
 
-(global-set-key (kbd "C-j") 'newline-and-indent)
+;; ── Eval ──
+(define-key emacs-lisp-mode-map (kbd "C-c C-e") #'eval-buffer)
 
-(global-set-key (kbd "C-x g g") 'point-to-register)
-(global-set-key (kbd "C-x g j") 'jump-to-register)
+;; ── Motion & editing ──
+(global-set-key (kbd "C-j") #'newline-and-indent)
+(global-set-key (kbd "C-a") #'back-to-indentation)
+(global-set-key (kbd "M-m") #'move-beginning-of-line)
 
-(global-set-key (kbd "M-]") 'select-next-window)
-(global-set-key (kbd "M-[")  'select-previous-window)
+(global-set-key (kbd "C-w") #'backward-kill-word)
+(global-set-key (kbd "C-h") #'backward-delete-char)
 
-(global-set-key "\C-w" 'backward-kill-word)
-(global-set-key "\C-h" 'backward-delete-char)
+(global-set-key (kbd "C-x C-k") #'kill-region)
+(global-set-key (kbd "C-x C-o") #'goto-line)
 
-(global-set-key "\C-x\C-k" 'kill-region)
-(global-set-key "\C-x\C-o" 'goto-line)
-
-(global-set-key (kbd "C-x p") 'password-generator-phonetic)
-
-(define-key minibuffer-local-map "\C-x\C-k" 'kill-region)
-(define-key minibuffer-local-map "\C-x\C-o" 'goto-line)
-
-(define-key isearch-mode-map [(control h)] 'isearch-delete-char)
-
-(global-set-key (kbd "C-c ; C-w") 'rinari-web-server-restart)
-
-(global-unset-key (kbd "C-z"))
-(global-unset-key (kbd "C-x C-z"))
-(global-set-key (kbd "C-z") 'undo)
-
-(define-key zencoding-mode-keymap (kbd "C-j") nil)
-(define-key zencoding-mode-keymap (kbd "M-j") 'zencoding-expand-line)
-
-(global-set-key (kbd "C-a") 'back-to-indentation)
-(global-set-key (kbd "M-m") 'move-beginning-of-line)
-
+(global-set-key (kbd "C-z") #'undo)
 (global-unset-key (kbd "C-t"))
 
-(js2r-add-keybindings-with-prefix "C-c C-j")
-(js2r-add-keybindings-with-prefix "C-c j")
+;; ── Window navigation ──
+;; In terminal mode, M-[ and M-] are set up in init.el via
+;; input-decode-map to coexist with CSI escape sequences.
+(when (display-graphic-p)
+  (global-set-key (kbd "M-]") #'select-next-window)
+  (global-set-key (kbd "M-[") #'select-previous-window))
 
-(define-key js2-mode-map (kbd "C-c e") 'js2-display-error-list)
-(define-key js2-mode-map (kbd "C-j") 'js2-line-break)
+;; ── Registers ──
+(global-set-key (kbd "C-x g g") #'point-to-register)
+(global-set-key (kbd "C-x g j") #'jump-to-register)
 
-(define-key yas-minor-mode-map (kbd "M-s") 'yas-ido-expand)
-(define-key yas-minor-mode-map (kbd "M-S") 'yas-insert-snippet)
+;; ── Minibuffer ──
+(define-key minibuffer-local-map (kbd "C-x C-k") #'kill-region)
+(define-key minibuffer-local-map (kbd "C-x C-o") #'goto-line)
 
-                                        ;(local-set-key (kbd "M-f") 'yas-next-field)
+;; ── Isearch ──
+(define-key isearch-mode-map (kbd "C-h") #'isearch-delete-char)
+(add-hook 'isearch-mode-end-hook #'my-goto-match-beginning)
 
+;; ── File / buffer ops ──
+(global-set-key (kbd "C-x r")   #'rename-file-and-buffer)
+(global-set-key (kbd "C-c r")   #'replace-string)
+(global-set-key (kbd "C-c c")   #'pbcopy)
+(global-set-key (kbd "C-c v")   #'pbpaste)
+(global-set-key (kbd "C-c w r") #'remove-windows-new-line-chars)
+(global-set-key (kbd "C-c [")   #'untabify-and-indent-buffer)
 
-(global-set-key (kbd "C-x r") 'rename-file-and-buffer)
+;; ── Password generator ──
+(global-set-key (kbd "C-x p") #'password-generator-phonetic)
 
-(global-set-key (kbd "C-c r") 'replace-string)
+;; ── xref / tags ──
+(global-set-key (kbd "M-.")     #'xref-find-definitions-other-window)
+(global-set-key (kbd "C-c M-.") #'xref-find-definitions)
 
-(global-set-key (kbd "C-c g") 'magit-status)
+;; ── Org mode ──
+(global-set-key (kbd "C-c o l") #'org-store-link)
+(global-set-key (kbd "C-c o c") #'org-capture)
+(global-set-key (kbd "C-c o a") #'org-agenda)
+(global-set-key (kbd "C-c o b") #'org-switchb)
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (define-key org-mode-map (kbd "C-j")     #'org-return)
+            (define-key org-mode-map (kbd "M-j")     #'org-insert-todo-heading)
+            (define-key org-mode-map (kbd "C-c u p") #'org-clock-update-time-maybe)))
+
+;; ── Mode switching ──
+(global-set-key (kbd "C-c m j") #'js2-mode)
+(global-set-key (kbd "C-c m s") #'js2-jsx-mode)
+(global-set-key (kbd "C-c m w") #'web-jsx-mode)
+
+;; ── YASnippet ──
+(with-eval-after-load 'yasnippet
+  (when (boundp 'yas-minor-mode-map)
+    (define-key yas-minor-mode-map (kbd "M-s") #'yas-completing-expand)
+    (define-key yas-minor-mode-map (kbd "M-S") #'yas-insert-snippet))
+  (add-hook 'yas-before-expand-snippet-hook #'my-yas-key-mapping-hook)
+  (add-hook 'yas-after-exit-snippet-hook #'my-yas-key-unmapping-hook))
 
 (defun my-yas-key-mapping-hook ()
-  (local-set-key (kbd "M-f") 'yas-next-field)
-  (local-set-key (kbd "M-b") 'yas-prev-field)
-  )
+  (local-set-key (kbd "M-f") #'yas-next-field)
+  (local-set-key (kbd "M-b") #'yas-prev-field))
 
 (defun my-yas-key-unmapping-hook ()
   (local-unset-key (kbd "M-f"))
   (local-unset-key (kbd "M-b")))
 
-;; clipboard copy/paste
-(global-set-key (kbd "C-c c") 'pbcopy)
-(global-set-key (kbd "C-c v") 'pbpaste)
+;; ── JS2 / JS2-Refactor ──
+(with-eval-after-load 'js2-refactor
+  (when (fboundp 'js2r-add-keybindings-with-prefix)
+    (js2r-add-keybindings-with-prefix "C-c C-j")
+    (js2r-add-keybindings-with-prefix "C-c j")))
 
-;;yasnippet
-(add-hook 'yas-before-expand-snippet-hook 'my-yas-key-mapping-hook)
-(add-hook 'yas-after-exit-snippet-hook 'my-yas-key-unmapping-hook)
-(define-key snippet-mode-map (kbd "C-c C-r") 'yas-reload-all)
+(with-eval-after-load 'js2-mode
+  (when (boundp 'js2-mode-map)
+    (define-key js2-mode-map (kbd "C-c e")   #'js2-display-error-list)
+    (define-key js2-mode-map (kbd "C-j")     #'js2-line-break)
+    (define-key js2-mode-map (kbd "C-c m w") #'web-jsx-mode)))
 
-;; ace-jump-mode
-(define-key global-map (kbd "C-c SPC") 'ace-jump-word-mode)
-(define-key global-map (kbd "C-c C-SPC") 'ace-jump-word-mode)
-(define-key global-map (kbd "C-c h SPC") 'ace-jump-char-mode)
-(define-key global-map (kbd "C-c l SPC") 'ace-jump-line-mode)
-(define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+;; ── Snippet editing ──
+(with-eval-after-load 'snippet-mode
+  (when (boundp 'snippet-mode-map)
+    (define-key snippet-mode-map (kbd "C-c C-r") #'yas-reload-all)))
 
-;; get rid of the fucking windows new line characters in the buffer ()
-(define-key global-map (kbd "C-c w r") 'remove-windows-new-line-chars)
+;; ── Ruby ──
+(add-hook 'ruby-mode-hook
+          (lambda () (local-set-key (kbd "RET") #'newline-and-indent)))
+(add-hook 'html-mode-hook
+          (lambda () (local-set-key (kbd "RET") #'newline-and-indent)))
 
-;;etags
-(global-unset-key (kbd "M-."))
-(global-set-key (kbd "M-.") 'find-tag-other-window)
-(global-set-key (kbd "C-c M-.") 'find-tag)
-
-;;org-mode
-(global-set-key (kbd "C-c o l") 'org-store-link)
-(global-set-key (kbd "C-c o c") 'org-capture)
-(global-set-key (kbd "C-c o a") 'org-agenda)
-(global-set-key (kbd "C-c o b") 'org-iswitchb)
-
-(add-hook 'org-mode-hook
-          (lambda ()
-            (define-key org-mode-map (kbd "C-j") 'org-return)
-            (define-key org-mode-map (kbd "M-j") 'org-insert-todo-heading)
-            (define-key org-mode-map (kbd "C-c u p") 'org-clock-update-time-maybe)
-            ))
-
-;;macros
-(define-key global-map (kbd "C-c [") 'untabify-and-indent-buffer)
-;; (define-key c++-mode-map (kbd "C-c [") 'tabify-and-indent-buffer)
-;; (define-key c-mode-map (kbd "C-c [") 'tabify-and-indent-buffer)
-
-
-;;projectile-mode
-(setq projectile-keymap-prefix (kbd "C-c C-p"))
-(define-key projectile-mode-map (kbd "C-c p x") 'projectile-run-async-shell-command-in-root)
-(define-key projectile-mode-map (kbd "C-c p p") 'projectile-test-project)
-(define-key projectile-mode-map (kbd "C-c p c") 'projectile-compile-project)
-(define-key projectile-mode-map (kbd "C-c p a") 'projectile-ag)
-
-
-;;ansible-mode
-(global-set-key (kbd "C-c a e") 'my-ansible-encrypt-buffer)
-(global-set-key (kbd "C-c a d") 'my-ansible-decrypt-buffer)
-
-(global-set-key (kbd "C-c m j") 'js2-mode)
-(global-set-key (kbd "C-c m s") 'js2-jsx-mode)
-(define-key js2-mode-map (kbd "C-c m w") 'web-jsx-mode)
-(define-key js2-jsx-mode-map (kbd "C-c m w") 'web-jsx-mode)
-
-
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "TAB") 'company-complete-selection))
-
-;;Cargo
-(add-hook 'rust-mode-hook 'cargo-minor-mode)
-
-;;elpy
-(define-key elpy-mode-map (kbd "C-c M-f") 'elpy-nav-indent-shift-right)
-(define-key elpy-mode-map (kbd "C-c M-b") 'elpy-nav-indent-shift-left)
+(provide 'my-keybindings)
+;;; my-keybindings.el ends here

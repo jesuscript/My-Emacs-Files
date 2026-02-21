@@ -1,200 +1,284 @@
-;;;;;;;;;;;;;;;;;;;; PACKAGES ;;;;;;;;;;;;;;;;;;;
+;;; init.el --- Main config (Emacs 30+) -*- lexical-binding: t; -*-
 
+;;; ──────────────────────────────────────────────────────────────────
+;;; Startup performance
+;;; ──────────────────────────────────────────────────────────────────
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 32 1024 1024)
+                  gc-cons-percentage 0.1)
+            (message "Emacs ready in %.2fs with %d GCs."
+                     (float-time (time-subtract after-init-time before-init-time))
+                     gcs-done)))
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
+(setq create-lockfiles nil
+      read-process-output-max (* 1024 1024))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Load path
+;;; ──────────────────────────────────────────────────────────────────
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Package system
+;;; ──────────────────────────────────────────────────────────────────
+(require 'package)
+(require 'seq)
+(setq package-archives
+      '(("gnu"    . "https://elpa.gnu.org/packages/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa"  . "https://melpa.org/packages/")))
+(setq package-install-upgrade-built-in t)
+
 (package-initialize)
 
-(setq my-package-packages '(js2-mode
-                            js2-refactor
-                            go-mode
-                            solidity-mode
-                            discover
-                            discover-my-major
-                            discover-js2-refactor
-                            regex-tool
-                            w3m
-                            rainbow-mode
-                            rainbow-delimiters
-                            ace-jump-mode
-                            auto-complete
-                            magit
-                            yaml-mode
-                            csv-mode
-                            yasnippet
-                            jade-mode
-                            floobits
-                            ag
-                            projectile
-                            ack-and-a-half
-                            helm-projectile
-                            flx-ido
-                            restclient
-                            feature-mode
-                            nginx-mode
-                            enh-ruby-mode
-                            markdown-mode
-                            coffee-mode
-                            vagrant
-                            scss-mode
-                            docker
-                            dockerfile-mode
-                            ansible
-                            password-generator
-                            haskell-mode
-                            web-mode
-                            rust-mode
-                            toml-mode
-                            helm
-                            elm-mode
-                            pug-mode
-                            racer
-                            company
-                            cargo
-                            rjsx-mode
-                            elpy))
+;; Purge corrupted auto-mode-alist entries from prior broken sessions
+(setq auto-mode-alist
+      (seq-filter (lambda (entry)
+                    (and (consp entry)
+                         (stringp (car entry))))
+                  auto-mode-alist))
 
-(add-to-list 'load-path "~/.emacs.d/lisp")
+(unless package-archive-contents
+  (package-refresh-contents))
 
-;; (require 'epa-file)
-;; (epa-file-enable)
+(require 'use-package)
+(setq use-package-always-ensure t
+      use-package-expand-minimally t)
 
-;;;;;;;;;;;;;;;;;; GLOBAL SETTINGS ;;;;;;;;;;;;;;;
+;;; ──────────────────────────────────────────────────────────────────
+;;; Custom file
+;;; ──────────────────────────────────────────────────────────────────
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file 'noerror 'nomessage))
 
+;;; ──────────────────────────────────────────────────────────────────
+;;; Global defaults
+;;; ──────────────────────────────────────────────────────────────────
 (global-font-lock-mode 1)
-(menu-bar-mode -1)
-(setq tramp-default-method "ssh")
-(setq tramp-auto-save-directory "/tmp")
-(global-auto-revert-mode)
-(setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
-      backup-by-copying t    ; Don't delink hardlinks
-      version-control t      ; Use version numbers on backups
-      delete-old-versions t  ; Automatically delete excess backups
-      kept-new-versions 20   ; how many of the newest versions to keep
-      kept-old-versions 5    ; and how many of the old
-      )
+(global-auto-revert-mode 1)
+(electric-pair-mode 1)
+(savehist-mode 1)
+(recentf-mode 1)
+(save-place-mode 1)
+(column-number-mode 1)
 
+(setq-default indent-tabs-mode nil
+              tab-width 2)
 
-;; (defun copy-from-osx ()
-;;       (shell-command-to-string "pbpaste"))
+(setq tramp-default-method "ssh"
+      tramp-auto-save-directory "/tmp"
+      uniquify-buffer-name-style 'forward)
 
-;; (defun paste-to-osx (text &optional push)
-;;   (let ((process-connection-type nil))
-;;     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
-;;       (process-send-string proc text)
-;;       (process-send-eof proc))))
+(let ((backup-dir (locate-user-emacs-file "backup/")))
+  (make-directory backup-dir t)
+  (setq backup-directory-alist `(("." . ,backup-dir))
+        backup-by-copying t
+        version-control t
+        delete-old-versions t
+        kept-new-versions 20
+        kept-old-versions 5))
 
-;; (setq interprogram-cut-function 'paste-to-osx)
-;; (setq interprogram-paste-function 'copy-from-osx)
-
-;;;;;;;;;;;;;; MODE-EXTENSION MAPPINGS ;;;;;;;;;;;
-
-(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.less" . less-css-mode))
-(add-to-list 'auto-mode-alist '("\\.srml" . sgml-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . sgml-mode))
-(add-to-list 'auto-mode-alist '("\\.cshtml\\'" . sgml-mode))
-(add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
-(add-to-list 'auto-mode-alist '("\\.ejs\\'" . sgml-mode))
-(add-to-list 'auto-mode-alist '("\\.http\\'" . restclient-mode))
-
-;;;;;;;;;;;;;;;;;;;;;; HOOKS ;;;;;;;;;;;;;;;;;;;;;
-
-(add-hook 'ruby-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
-(add-hook 'html-mode-hook (lambda () (local-set-key "\r" 'newline-and-indent)))
-(add-hook 'isearch-mode-end-hook 'my-goto-match-beginning)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(load "indentation-config" t)
-(load "my-package-configs")
-(load "my-handy-functions")
-(load "my-keybindings")
-(load "my-macros")
-(load "my-local-macros" t)
-(load "my-faces")
-
-
-(put 'upcase-region 'disabled nil)
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
+(put 'upcase-region   'disabled nil)
 (put 'downcase-region 'disabled nil)
 
-(ad-unadvise 'compilation-start)
+;;; ──────────────────────────────────────────────────────────────────
+;;; Completion (Vertico + Orderless + Marginalia + Consult + Embark)
+;;; ──────────────────────────────────────────────────────────────────
+(use-package vertico
+  :init (vertico-mode 1)
+  :config (setq vertico-cycle t))
 
-(require 'solidity-mode)
+(use-package orderless
+  :init
+  (setq completion-styles '(orderless basic)
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles basic partial-completion)))))
 
-(require 'uniquify)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(erc-away-nickname "jesus_is_unavailable")
- '(erc-modules
-   (quote
-    (autoaway autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
- '(erc-nick "jesus666")
- '(erc-port nil)
- '(erc-server nil)
- '(erc-server-reconnect-attempts t)
- '(erc-server-reconnect-timeout 20)
- '(js-indent-level 2)
- '(js2-strict-inconsistent-return-warning nil)
- '(org-agenda-files (quote ("~/CODE/ETHEREUM/todo_ethereum.org")))
- '(package-selected-packages
-   (quote
-    (elpy rjsx-mode cargo company racer
-          (\, pug-mode)
-          pug-mode elm-mode toml-mode rust-mode web-mode haskell-mode password-generator ansible dockerfile-mode docker scss-mode vagrant coffee-mode markdown-mode enh-ruby-mode nginx-mode feature-mode restclient flx-ido helm-projectile projectile ag floobits jade-mode csv-mode yaml-mode auto-complete rainbow-delimiters rainbow-mode w3m regex-tool discover-js2-refactor discover-my-major discover solidity-mode go-mode js2-refactor magit js2-mode ack-and-a-half ace-jump-mode)))
- '(projectile-globally-ignored-directories
-   (quote
-    (".idea" ".eunit" ".git" ".hg" ".fslckout" ".bzr" "_darcs" ".tox" ".svn" "build" "node_modules")))
- '(projectile-project-root-files
-   (quote
-    ("rebar.config" "project.clj" "SConstruct" "pom.xml" "build.sbt" "build.gradle" "Gemfile" "requirements.txt" "package.json" "gulpfile.js" "Gruntfile.js" "bower.json" "composer.json" "Cargo.toml" "mix.exs" ".gitignore" ".meteor/packages")))
- '(pyvenv-activate "nil")
- '(safe-local-variable-values
-   (quote
-    ((eval pyvenv-activate "./.venv")
-     (python-shell-interpreter-args . "-i --simple-prompt")
-     (python-shell-interpreter . "ipython")
-     (python-shell-interpreter-args "-i --simple-prompt")
-     (python-shell-interpreter "ipython"))))
- '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(bg:erc-color-face10 ((t (:background "color-18"))))
- '(bg:erc-color-face14 ((t (:background "black"))))
- '(diff-added ((t (:inherit diff-changed :background "#ffffff" :foreground "#000000"))))
- '(diff-file-header ((t (:background "grey70" :foreground "black" :weight bold))))
- '(diff-refine-change ((t (:background "color-45"))) t)
- '(diff-refine-changed ((t (:background "color-45"))))
- '(erb-face ((t (:background "color-240"))))
- '(fg:erc-color-face1 ((t (:background "#ffffff" :foreground "black"))))
- '(fringe ((t (:background "black" :foreground "brightwhite"))))
- '(js2-external-variable ((t (:foreground "#aaa"))))
- '(magit-diff-add ((t (:background "#ffffff" :foreground "green"))))
- '(magit-diff-del ((t (:background "#ffffff" :foreground "red"))))
- '(magit-item-highlight ((t (:background "black"))))
- '(magit-key-mode-button-face ((t (:foreground "#00ffff"))))
- '(org-document-info ((t (:foreground "#cccccc"))))
- '(org-pomodoro-mode-line ((t (:foreground "#cc0000"))))
- '(org-pomodoro-mode-line-break ((t (:foreground "#007700"))))
- '(org-table ((t (:foreground "#cccccc"))))
- '(w3m-anchor ((t (:foreground "#cccccc"))))
- '(w3m-arrived-anchor ((t (:foreground "#ffffff"))))
- '(w3m-header-line-location-content ((t (:background "Gray90" :foreground "#000077"))))
- '(w3m-image-anchor ((t (:background "#550055"))))
- '(w3m-session-select ((t (:foreground "#999999"))))
- '(w3m-tab-unselected ((t (:background "blue" :foreground "#ffffff"))))
- '(web-mode-html-attr-name-face ((t (:foreground "#00ff77"))))
- '(web-mode-html-attr-value-face ((t (:foreground "#ff2299"))))
- '(web-mode-html-tag-face ((t (:foreground "#0077ff")))))
+(use-package marginalia
+  :init (marginalia-mode 1))
+
+(use-package consult
+  :bind (("C-c s"   . consult-ripgrep)
+         ("C-c b"   . consult-buffer)
+         ("C-c C-s" . consult-line)))
+
+(use-package embark
+  :bind (("C-."  . embark-act)
+         ("C-;"  . embark-dwim))
+  :init (setq prefix-help-command #'embark-prefix-help-command))
+
+(use-package embark-consult
+  :after (embark consult)
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; In-buffer completion (Corfu + Cape)
+;;; ──────────────────────────────────────────────────────────────────
+(use-package corfu
+  :init (global-corfu-mode 1)
+  :config
+  (setq corfu-cycle t
+        corfu-auto t
+        corfu-auto-prefix 2
+        corfu-auto-delay 0.1))
+
+(use-package cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
+(use-package kind-icon
+  :after corfu
+  :if (display-graphic-p)
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Discoverability
+;;; ──────────────────────────────────────────────────────────────────
+(use-package which-key
+  :init (which-key-mode 1)
+  :config (setq which-key-idle-delay 0.4))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; LSP — Eglot (built-in)
+;;; ──────────────────────────────────────────────────────────────────
+(use-package eglot
+  :ensure nil
+  :hook ((rustic-mode   . eglot-ensure)
+         (gdscript-mode . eglot-ensure))
+  :config
+  (setq eglot-autoshutdown t
+        eglot-events-buffer-size 0))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Rust
+;;; ──────────────────────────────────────────────────────────────────
+(use-package rustic
+  :mode ("\\.rs\\'" . rustic-mode)
+  :config
+  (setq rustic-lsp-client 'eglot
+        rustic-format-on-save nil))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Godot — GDScript
+;;; ──────────────────────────────────────────────────────────────────
+(use-package gdscript-mode
+  :mode ("\\.gd\\'" . gdscript-mode)
+  :config
+  (setq gdscript-godot-executable "/Applications/Godot.app/Contents/MacOS/Godot")
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs
+                 '(gdscript-mode . ("localhost" 6005)))))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Git
+;;; ──────────────────────────────────────────────────────────────────
+(use-package magit
+  :bind ("C-c g" . magit-status))
+
+(use-package diff-hl
+  :hook ((magit-pre-refresh  . diff-hl-magit-pre-refresh)
+         (magit-post-refresh . diff-hl-magit-post-refresh))
+  :config (global-diff-hl-mode 1))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Search & navigation
+;;; ──────────────────────────────────────────────────────────────────
+(use-package rg
+  :commands (rg rg-project)
+  :config (rg-enable-default-bindings))
+
+(use-package avy
+  :bind (("C-c SPC"   . avy-goto-word-1)
+         ("C-c C-SPC" . avy-goto-word-1)
+         ("C-c h SPC" . avy-goto-char)
+         ("C-c l SPC" . avy-goto-line)))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Formatting
+;;; ──────────────────────────────────────────────────────────────────
+(use-package apheleia
+  :init (apheleia-global-mode +1))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Terminal
+;;; ──────────────────────────────────────────────────────────────────
+(use-package vterm
+  :commands vterm
+  :config
+  (add-to-list 'vterm-keymap-exceptions "M-[")
+  (add-to-list 'vterm-keymap-exceptions "M-]"))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; AI — Claude Code (agentic coding)
+;;; ──────────────────────────────────────────────────────────────────
+
+;; Claude Code — agentic assistant (runs CLI in vterm)
+(use-package claude-code
+  :ensure nil
+  :load-path "~/.emacs.d/elpa/claude-code"
+  :bind-keymap ("C-c q" . claude-code-command-map)
+  :config
+  (setq claude-code-terminal-backend 'vterm)
+  (claude-code-mode 1))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Language modes
+;;; ──────────────────────────────────────────────────────────────────
+(use-package yaml-mode     :mode "\\.ya?ml\\'")
+(use-package markdown-mode :mode ("\\.md\\'" "\\.markdown\\'"))
+(use-package web-mode      :mode ("\\.html?\\'" "\\.ejs\\'" "\\.cshtml\\'"))
+(use-package js2-mode      :mode "\\.js\\'")
+(use-package toml-mode     :mode "\\.toml\\'")
+
+(use-package yasnippet
+  :hook (prog-mode . yas-minor-mode)
+  :config
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets/"))
+  (yas-reload-all))
+
+(use-package js2-refactor
+  :hook (js2-mode . js2-refactor-mode))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Mode associations
+;;; ──────────────────────────────────────────────────────────────────
+(add-to-list 'auto-mode-alist '("\\.srml\\'"    . sgml-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . sgml-mode))
+(add-to-list 'auto-mode-alist '("\\.less\\'"    . less-css-mode))
+(add-to-list 'auto-mode-alist '("\\.yasnippet\\'" . snippet-mode))
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Personal modules (lisp/)
+;;; ──────────────────────────────────────────────────────────────────
+(load "indentation-config" t)
+(load "my-aj-compilation"  t)
+(load "my-handy-functions" t)
+(load "my-macros"          t)
+(load "my-keybindings"     t)
+(load "my-faces"           t)
+(load "my-local-macros"    t)
+
+;;; ──────────────────────────────────────────────────────────────────
+;;; Terminal fix — swallow focus events arriving after M-[
+;;; ──────────────────────────────────────────────────────────────────
+(unless (display-graphic-p)
+  (global-set-key (kbd "M-[")
+    (lambda ()
+      "Run `select-previous-window', but swallow trailing I/O from focus events."
+      (interactive)
+      (let ((next (read-event nil nil 0.01)))
+        (cond
+         ((eq next ?I) nil)
+         ((eq next ?O) nil)
+         (next (push next unread-command-events)
+               (select-previous-window))
+         (t (select-previous-window))))))
+  (global-set-key (kbd "M-]") #'select-next-window))
+
+;;; init.el ends here
